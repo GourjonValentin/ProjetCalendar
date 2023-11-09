@@ -15,6 +15,14 @@ int main(){
     insert_sorted(L, C);
     C = create_cell(2, 3);
     insert_sorted(L, C);
+    C = create_cell(6, 2);
+    insert_sorted(L, C);
+    C = create_cell(1, 4);
+    insert_sorted(L, C);
+    C = create_cell(7, 5);
+    insert_sorted(L, C);
+    C = create_cell(8, 1);
+    insert_sorted(L, C);
     print_list(L);
     return 0;
 };
