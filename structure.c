@@ -113,7 +113,7 @@ int index_of(int val, t_d_list list) {
         index++;
         cell = cell->next[0];
     }
-    return -1;
+    return index;
 }
 
 void print_aligned_level(t_d_list *list, int level) {
@@ -132,12 +132,12 @@ void print_aligned_level(t_d_list *list, int level) {
     printf("[list head_%d]", level);
     while (cell != NULL) {
         if (prev == NULL) {
-            i_prev = 0;
+            i_prev = -1;
         } else {
             i_prev = index_of(prev->value, *list);
         }
         i_curr = index_of(cell->value, *list);
-        delta_i = i_curr - i_prev;
+        delta_i = i_curr - i_prev - 1;
         for (int i = 0; i < delta_i * 9 + delta_i * n_max; i++) {
             printf("-");
         }
@@ -149,8 +149,10 @@ void print_aligned_level(t_d_list *list, int level) {
         printf("%d|@-]", cell->value);
         prev = cell;
         cell = cell->next[level];
-        printf("%d", delta_i);
-
+    }
+    delta_i = index_of(999999999999, *list) - i_curr - 1;
+    for (int i = 0; i < delta_i * 9 + delta_i * n_max; i++) {
+        printf("-");
     }
     printf("-->NULL\n");
 }
