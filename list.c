@@ -2,19 +2,14 @@
 // Created by valen on 09/11/2023.
 //
 
-#include "structure.h"
+#include "list.h"
+#include "cell.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
 
-t_d_cell * create_cell(int value, int max_levels){
-    t_d_cell *cell = malloc(sizeof(t_d_cell));
-    cell->value = value;
-    cell->next = malloc(sizeof (t_d_cell) * max_levels);
-    cell->max_levels = max_levels;
-    return cell;
-}
+
 
 t_d_list * create_list(int max_levels) {
     t_d_list *list = malloc(sizeof(t_d_list));

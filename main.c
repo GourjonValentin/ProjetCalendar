@@ -4,7 +4,7 @@
 
 #include "stdlib.h"
 #include "stdio.h"
-#include "structure.h"
+#include "list.h"
 
 int main(){
 
