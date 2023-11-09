@@ -57,21 +57,19 @@ void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
         cell->next[level] = NULL;
         return;
     }
-    t_d_cell *prev = list->heads[level];
-    t_d_cell *temp = prev->next;
-    while (temp->next != NULL){
-        if (cell->value < temp->value){
-            cell->next = &temp;
-            prev->next = &cell;
-        }else{
-            prev = prev->next;
-            temp = temp->next;
-            }
-        }
-        if (temp->next == NULL){
-            temp->next = &cell;
-        }
+    t_d_cell *temp = list->heads[level];
+    if (temp->value > cell->value) {
+        list->heads[level] = cell;
+        cell->next[level] = temp;
+        return;
     }
+    while (temp->next[level] != NULL && temp->next[level]->value < cell->value) {
+        temp = temp->next[level];
+    }
+    cell->next[level] = temp->next[level];
+    temp->next[level] = cell;
+}
+
 
 void insert_sorted(t_d_list *list, t_d_cell* cell) {
     for (int i = 0; i < cell->max_levels; i++) {

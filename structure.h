@@ -30,10 +30,6 @@ void print_level(t_d_list *list, int level);
 
 void print_list(t_d_list *list);
 
-void print_aligned_level(t_d_list *list, int level);
-
-void print_aligned_list(t_d_list *list);
-
 void insert_sorted(t_d_list *list, t_d_cell* cell);
 
 void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level);
