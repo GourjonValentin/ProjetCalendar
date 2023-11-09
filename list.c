@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <math.h>
 
-
+// PARTIE 1
 
 t_d_list * create_list(int max_levels) {
     t_d_list *list = malloc(sizeof(t_d_list));
@@ -155,4 +155,48 @@ void print_aligned_list(t_d_list *list) {
     for (int i = 0; i < list->max_levels; i++) {
         print_aligned_level(list, i);
     }
+}
+
+
+// PARTIE 2
+
+int level_of(int index, int n_levels) {
+    int level = 0;
+    while (index % 2 == 0 && level < n_levels) {
+        index /= 2;
+        level++;
+    }
+    return level;
+}
+
+t_d_list * create_filled_list(int n_levels){
+    /* Création d'une liste a partir du principe suivant :
+     * Soit n_levels le nombre de niveaux de la liste
+     * La liste stocke toutes les valeurs de 0 à 2^n_levels - 1
+     * Chaque niveau pointera une cellule sur deux du niveau précédent
+     * Le niveau 0 pointera sur toutes les cellules
+     * */
+    t_d_list *list = create_list(n_levels);
+    int n_cells = pow(2, n_levels) - 1;
+    int n_levels_cell = 0;
+
+    // Création des cellules
+    t_d_cell **cells = malloc(sizeof(t_d_cell *) * n_cells);
+    for (int i = 1; i <= n_cells; i++) {
+
+        // calcul du nombre de niveaux de la cellule
+        n_levels_cell = level_of(i, n_levels) + 1;
+        cells[i-1] = create_cell(i, n_levels_cell);
+    }
+
+    // Insertion des cellules dans la liste
+    for (int i = 0; i < n_cells; i++) {
+        insert_sorted(list, cells[i]);
+    }
+
+    // Libération de la mémoire
+    free(cells);
+
+    return list;
+
 }

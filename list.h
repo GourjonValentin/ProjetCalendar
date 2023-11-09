@@ -7,7 +7,7 @@
 
 #include "cell.h"
 
-// s_d_list est une liste à niveaux multiples
+// PARTIE 1
 
 typedef struct s_d_list {
     t_d_cell **heads;
@@ -31,5 +31,9 @@ void print_aligned_list(t_d_list *list);
 void insert_sorted(t_d_list *list, t_d_cell* cell);
 
 void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level);
+
+// PARTIE 2
+
+t_d_list * create_filled_list(int n_levels);
 
 #endif //PROJETCALENDAR_LIST_H
