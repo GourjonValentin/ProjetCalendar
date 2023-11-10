@@ -5,6 +5,8 @@
 #include "testing.h"
 #include "list.h"
 #include "timer.h"
+#include "plot/pbPlots.h"
+#include "plot/supportLib.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -40,6 +42,8 @@ time_result** test_search_time_for_given_func(t_d_list *list, int (*search_funct
         printf("Mean time for n = %d : %f\n", n, mean);
         res->mean_time = mean;
         printf("\n");
+
+        results[i] = res;
     }
     return results;
 }
@@ -59,5 +63,86 @@ void test_search_time(int n_levels) {
     printf("Optimized search: \n");
     optimized_results = test_search_time_for_given_func(L, &optimized_search);
 
+    // Ploting data using pbPlots library
+
+    // Creating data
+    printf("Creating data...\n");
+
+    double *x = malloc(sizeof(int) * 3);
+    double *y1 = malloc(sizeof(double) * 3);
+    double *y2 = malloc(sizeof(double) * 3);
+
+    for (int i = 0; i < 3; i++) {
+        x[i] = classic_results[i]->n;
+        y1[i] = optimized_results[i]->total_time;
+        y2[i] = classic_results[i]->total_time;
+    }
+
+    // Plotting data
+    printf("Plotting data...\n");
+
+    _Bool success;
+    StringReference *errorMessage;
+
+    double xs [] = {-2, -1, 0, 1, 2};
+    double ys [] = {2, -1, -2, -1, 2};
+
+    StartArenaAllocator();
+
+    ScatterPlotSeries *series1 = GetDefaultScatterPlotSeriesSettings();
+    series1->xs = x;
+    series1->xsLength = 3;
+    series1->ys = y1;
+    series1->ysLength = 3;
+    series1->linearInterpolation = true;
+    series1->lineType = L"solid";
+    series1->lineTypeLength = wcslen(series1->lineType);
+    series1->lineThickness = 2;
+    series1->color = CreateRGBColor(1, 0, 0);
+
+    ScatterPlotSeries *series2= GetDefaultScatterPlotSeriesSettings();
+    series2->xs = x;
+    series2->xsLength = 3;
+    series2->ys = y2;
+    series2->ysLength = 3;
+    series2->linearInterpolation = true;
+    series2->lineType = L"solid";
+    series2->lineTypeLength = wcslen(series2->lineType);
+    series2->lineThickness = 2;
+    series2->color = CreateRGBColor(0, 0, 1);
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->width = 1920;
+    settings->height = 1080;
+    settings->autoBoundaries = true;
+    settings->autoPadding = true;
+    settings->title = L"Evolution of time to search as a function of the number of searches";
+    settings->titleLength = wcslen(settings->title);
+    settings->xLabel = L"Number of searches";
+    settings->xLabelLength = wcslen(settings->xLabel);
+    settings->yLabel = L"Time (ms)";
+    settings->yLabelLength = wcslen(settings->yLabel);
+    ScatterPlotSeries *s [] = {series1, series2};
+    settings->scatterPlotSeries = s;
+    settings->scatterPlotSeriesLength = 2;
+
+    RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
+    errorMessage = (StringReference *)malloc(sizeof(StringReference));
+    success = DrawScatterPlotFromSettings(canvasReference, settings, errorMessage);
+
+    if(success){
+        ByteArray *pngdata = ConvertToPNG(canvasReference->image);
+        WriteToFile(pngdata, "plot.png");
+        DeleteImage(canvasReference->image);
+        printf("Successfully wrote to plot.png\n");
+    } else{
+        fprintf(stderr, "Error: ");
+        for(int i = 0; i < errorMessage->stringLength; i++){
+            fprintf(stderr, "%c", errorMessage->string[i]);
+        }
+        fprintf(stderr, "\n");
+    }
+
+    FreeAllocations();
 
 }
