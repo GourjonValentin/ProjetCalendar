@@ -161,6 +161,7 @@ void print_aligned_list(t_d_list *list) {
 // PARTIE 2
 
 int level_of(int index, int n_levels) {
+    // Fonction qui calcule le niveau d'une cellule à partir de son index
     int level = 0;
     while (index % 2 == 0 && level < n_levels) {
         index /= 2;
@@ -198,5 +199,19 @@ t_d_list * create_filled_list(int n_levels){
     free(cells);
 
     return list;
-
 }
+
+int classic_search(t_d_list *list, int value) {
+    int index = 0;
+    t_d_cell *cell = list->heads[0];
+    while (cell != NULL) {
+        if (cell->value == value) {
+            return index;
+        }
+        index++;
+        cell = cell->next[0];
+    }
+    return -1;
+}
+
+

@@ -36,4 +36,8 @@ void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level);
 
 t_d_list * create_filled_list(int n_levels);
 
+int classic_search(t_d_list *list, int value);
+
+int optimized_search(t_d_list *list, int value);
+
 #endif //PROJETCALENDAR_LIST_H
