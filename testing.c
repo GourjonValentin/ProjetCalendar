@@ -116,7 +116,7 @@ void test_search_time(int n_levels) {
     settings->height = 1080;
     settings->autoBoundaries = true;
     settings->autoPadding = true;
-    settings->title = L"Evolution of time to search as a function of the number of searches";
+    settings->title = L"Evolution of time (ms) to search as a function of the number of searches";
     settings->titleLength = wcslen(settings->title);
     settings->xLabel = L"Number of searches";
     settings->xLabelLength = wcslen(settings->xLabel);
