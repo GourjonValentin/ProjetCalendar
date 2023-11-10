@@ -16,7 +16,7 @@
 // 3. Repeat 2. 1000 times / 10000 times / 100000 times
 
 // function that execute the above protocol for a given search function
-void test_search_time(t_d_list *list, int (*search_function)(t_d_list *, int)) {
+void test_search_time_for_given_func(t_d_list *list, int (*search_function)(t_d_list *, int)) {
     for (int i = 0; i < 3; i++) {
         double mean = 0;
         int n = 1000 * pow(10, i);
@@ -33,4 +33,19 @@ void test_search_time(t_d_list *list, int (*search_function)(t_d_list *, int)) {
         printf("Mean time for n = %d : %f\n", n, mean);
         printf("\n");
     }
+}
+
+void test_search_time(int n_levels) {
+    t_d_list *L;
+    L = create_filled_list(n_levels);
+    //print_aligned_list(L);
+
+    printf("Comparing search time for classic and optimized search algorithms for a list of size %d\n", n_levels);
+    printf("Times are in milliseconds\n");
+    printf("\n");
+    printf("Classic search: \n");
+    test_search_time_for_given_func(L, &classic_search);
+    printf("\n");
+    printf("Optimized search: \n");
+    test_search_time_for_given_func(L, &optimized_search);
 }
