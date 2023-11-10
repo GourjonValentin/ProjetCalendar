@@ -13,4 +13,8 @@ add_executable(ProjetCalendar
         testing.h
         timer.c
         timer.h
+        plot/pbPlots.c
+        plot/pbPlots.h
+        plot/supportLib.c
+        plot/supportLib.h
 )

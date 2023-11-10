@@ -15,7 +15,14 @@
 // 3. Repeat 2. 1000 times / 10000 times / 100000 times
 
 // function that execute the above protocol for a given search function
-void test_search_time_for_given_func(t_d_list *list, int (*search_function)(t_d_list *, int));
+
+typedef struct result {
+    int n;
+    int total_time;
+    double mean_time;
+} time_result;
+
+time_result** test_search_time_for_given_func(t_d_list *list, int (*search_function)(t_d_list *, int));
 
 void test_search_time(int n_levels);
 
