@@ -9,4 +9,8 @@ add_executable(ProjetCalendar
         list.h
         cell.c
         cell.h
+        testing.c
+        testing.h
+        timer.c
+        timer.h
 )

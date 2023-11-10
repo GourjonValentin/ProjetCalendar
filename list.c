@@ -217,17 +217,21 @@ int classic_search(t_d_list *list, int value) {
 int optimized_search(t_d_list *list, int value) {
     int index = 0;
     int level = list->max_levels - 1;
+    t_d_cell *prev = NULL;
     t_d_cell *cell = list->heads[level];
     while (level >= 0) {
         while (cell != NULL && cell->value < value) {
             index += pow(2, level);
+            prev = cell;
             cell = cell->next[level];
         }
         if (cell != NULL && cell->value == value) {
             return index;
         }
         level--;
-        if (level >= 0) {
+        if (prev != NULL) {
+            cell = prev->next[level];
+        } else {
             cell = list->heads[level];
         }
     }
