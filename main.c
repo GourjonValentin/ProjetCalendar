@@ -4,9 +4,9 @@
 
 #include "stdlib.h"
 #include "stdio.h"
-#include "list.h"
-#include "cell.h"
-#include "testing.h"
+#include "part1-2/list.h"
+#include "part1-2/cell.h"
+#include "part1-2/testing.h"
 
 int main(){
 
