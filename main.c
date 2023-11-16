@@ -4,19 +4,11 @@
 
 #include "stdlib.h"
 #include "stdio.h"
-#include "part1-2/list.h"
-#include "part1-2/cell.h"
-#include "part1-2/testing.h"
+#include "part_3/cell.h"
+#include "part_3/struct.h"
+
 
 int main(){
 
-    int n = 12;
-
-    test_search_time(n);
-
-
     return 0;
-
-
-
 };

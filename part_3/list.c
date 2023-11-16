@@ -10,7 +10,7 @@
 #include <math.h>
 
 // PARTIE 1
-
+/*
 t_d_list * create_list(int max_levels) {
     t_d_list *list = malloc(sizeof(t_d_list));
     list->heads = malloc(sizeof(t_d_cell *) * max_levels);
@@ -176,7 +176,7 @@ t_d_list * create_filled_list(int n_levels){
      * La liste stocke toutes les valeurs de 0 à 2^n_levels - 1
      * Chaque niveau pointera une cellule sur deux du niveau précédent
      * Le niveau 0 pointera sur toutes les cellules
-     * */
+     *
     t_d_list *list = create_list(n_levels);
     int n_cells = pow(2, n_levels) - 1;
     int n_levels_cell = 0;
@@ -237,3 +237,4 @@ int optimized_search(t_d_list *list, int value) {
     }
     return -1;
 }
+*/
