@@ -4,7 +4,7 @@ project(ProjetCalendar C)
 set(CMAKE_C_STANDARD 11)
 
 add_executable(ProjetCalendar
-        part1-2/main.c
+        main.c
         part1-2/list.c
         part1-2/list.h
         part1-2/cell.c

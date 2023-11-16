@@ -19,6 +19,7 @@ typedef struct time {
 typedef struct event {
     t_date date;
     t_time time;
+    t_time duration;
     char *name;
 } t_event;
 
