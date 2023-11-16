@@ -48,6 +48,30 @@ void insert_head(t_d_list *list, t_d_cell* cell) {
 
 */
 
+void deleting_node_at_level(t_d_list* list, t_agenda_entry* ag_entry, int level) {
+    t_d_cell* temp = list->heads[level];
+    t_d_cell* prev = NULL;
+    while (temp != NULL) {
+        if (strcmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name) == 0 && strcmp(temp->ag_entry->contact->first_name, ag_entry->contact->first_name ) == 0) {
+            if (prev == NULL) {
+                list->heads[level] = temp->next[level];
+            } else {
+                prev->next[level] = temp->next[level];
+            }
+            free(temp);
+            return;
+        }
+        prev = temp;
+        temp = temp->next[level];
+    }
+}
+
+void deleting_node(t_d_list* list, t_agenda_entry* ag_entry) {
+    for (int i = 0; i < list->max_levels; i++) {
+        deleting_node_at_level(list, ag_entry, i);
+    }
+}
+
 void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
