@@ -34,6 +34,7 @@ typedef struct contact {
     t_event_list *events;
 } t_contact;
 
+char* scanString(void);
 
 
 #endif //PROJETCALENDAR_STRUCT_H

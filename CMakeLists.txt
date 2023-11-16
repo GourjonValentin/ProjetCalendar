@@ -19,4 +19,4 @@ add_executable(ProjetCalendar
         plot/supportLib.h
         part_3/struct.c
         part_3/struct.h
-)
+        part_3/cell.c part_3/list.c)
