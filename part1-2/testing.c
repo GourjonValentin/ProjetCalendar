@@ -5,8 +5,8 @@
 #include "testing.h"
 #include "list.h"
 #include "timer.h"
-#include "plot/pbPlots.h"
-#include "plot/supportLib.h"
+#include "../plot/pbPlots.h"
+#include "../plot/supportLib.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -83,9 +83,6 @@ void test_search_time(int n_levels) {
 
     _Bool success;
     StringReference *errorMessage;
-
-    double xs [] = {-2, -1, 0, 1, 2};
-    double ys [] = {2, -1, -2, -1, 2};
 
     StartArenaAllocator();
 
