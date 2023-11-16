@@ -91,5 +91,27 @@ void create_event_for_contact(t_agenda_entry *agenda_entry){
     char *name = scanString();
     t_event *event = create_event(date, time, duration, name);
     add_event_to_contact(event,agenda_entry);
+}
 
+void del_event_from_contact(t_agenda_entry *agenda_entry, char *name){
+    if (agenda_entry->events == NULL){
+        printf("No events for this contact");
+        return;
+    }
+    t_event_list *temp = agenda_entry->events;
+    if (strcmp(temp->event->name,name) == 0){
+        agenda_entry->events = temp->next;
+        free(temp);
+        return;
+    }
+    while (temp->next != NULL){
+        if (strcmp(temp->next->event->name,name) == 0){
+            t_event_list *temp2 = temp->next;
+            temp->next = temp->next->next;
+            free(temp2);
+            return;
+        }
+        temp = temp->next;
+    }
+    printf("No event with this name");
 }
