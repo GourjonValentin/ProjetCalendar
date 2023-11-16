@@ -8,10 +8,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
+#include <string.h>
 
 // PARTIE 1
 
-t_d_list * create_list(int max_levels) {
+t_d_list * create_list() {
+    int max_levels = 4;
     t_d_list *list = malloc(sizeof(t_d_list));
     list->heads = malloc(sizeof(t_d_cell *) * max_levels);
     list->max_levels = max_levels;
@@ -21,6 +23,8 @@ t_d_list * create_list(int max_levels) {
     return list;
 }
 
+
+/*
 void insert_head_at_level(t_d_list *list, t_d_cell* cell, int level) {
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
@@ -42,6 +46,8 @@ void insert_head(t_d_list *list, t_d_cell* cell) {
     }
 }
 
+*/
+
 void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
@@ -53,12 +59,12 @@ void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
         return;
     }
     t_d_cell *temp = list->heads[level];
-    if (temp->value > cell->value) {
+    if (strcmp(temp->ag_entry->contact->last_name, cell->ag_entry->contact->last_name) > 0) {
         list->heads[level] = cell;
         cell->next[level] = temp;
         return;
     }
-    while (temp->next[level] != NULL && temp->next[level]->value < cell->value) {
+    while (temp->next[level] != NULL && strcmp(temp->next[level]->ag_entry->contact->last_name, cell->ag_entry->contact->last_name) < 0) {
         temp = temp->next[level];
     }
     cell->next[level] = temp->next[level];
@@ -66,11 +72,49 @@ void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
 }
 
 
-void insert_sorted(t_d_list *list, t_d_cell* cell) {
-    for (int i = 0; i < cell->max_levels; i++) {
-        insert_sorted_at_level(list, cell, i);
+void insert_sorted(t_d_list *list, t_agenda_entry *ag_entry) {
+    // Calcul du level de la cellule
+    int level = list -> max_levels; // On part du niveau max puis on décroit si il existe déja
+    t_d_cell *temp; // Cellule temporaire pour parcourir la liste pour la comparaison
+    int cmp, cmp2, final_level = 1;
+
+    while (level > 1 && final_level == 1) { // Comparaison à chaque level
+        temp = list->heads[level-1]; // On part de la tête du level
+
+        cmp = -1; // On initialise la comparaison à -1 pour entrer dans la boucle
+        while (temp != NULL && cmp < 0) { // Comparaison à chaque cellule du level
+            cmp = strncmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name, list->max_levels - level + 1);
+
+            if (cmp == 0) { // Résultat de la comparaison des x premiers caractères
+                cmp2 = strcmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name);
+
+                if (cmp2 == 0) { // resultat de la comparaison des noms
+                    cmp2 = strcmp(temp->ag_entry->contact->first_name, ag_entry->contact->first_name);
+
+                    if (cmp2 == 0) { // Comparaison des prénoms si noms identiques
+                        printf("Error : contact already exists with this name\n");
+                    }
+
+                } if (cmp2 == -1) { //
+                    // todo : level de temp -- (deletion puis réinsertion = calcul auto?);
+                    final_level = level;
+                }
+
+
+            }
+            temp = temp->next[level-1]; // Passage à la cellule suivante
+        }
+
+        level --; // Passage au level inférieur
     }
+
+    // Création de la cellule
+    t_d_cell* cell = create_cell(ag_entry, final_level);
+    insert_sorted_at_level(list, cell, final_level);
+
 }
+
+/*
 
 void print_level(t_d_list *list, int level) {
     if (level < 0 || level >= list->max_levels) {
@@ -176,7 +220,7 @@ t_d_list * create_filled_list(int n_levels){
      * La liste stocke toutes les valeurs de 0 à 2^n_levels - 1
      * Chaque niveau pointera une cellule sur deux du niveau précédent
      * Le niveau 0 pointera sur toutes les cellules
-     * */
+     * *\/
     t_d_list *list = create_list(n_levels);
     int n_cells = pow(2, n_levels) - 1;
     int n_levels_cell = 0;
@@ -237,3 +281,4 @@ int optimized_search(t_d_list *list, int value) {
     }
     return -1;
 }
+*/
