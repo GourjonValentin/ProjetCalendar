@@ -40,6 +40,7 @@ typedef struct agenda_entry {
 } t_agenda_entry;
 
 char* scanString(void);
+void print_event_from_contact(t_contact *contact);
 
 
 #endif //PROJETCALENDAR_STRUCT_H
