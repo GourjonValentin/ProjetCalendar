@@ -58,7 +58,6 @@ void deleting_node_at_level(t_d_list* list, t_agenda_entry* ag_entry, int level)
             } else {
                 prev->next[level] = temp->next[level];
             }
-            free(temp);
             return;
         }
         prev = temp;
@@ -119,8 +118,11 @@ void insert_sorted(t_d_list *list, t_agenda_entry *ag_entry) {
                         printf("Error : contact already exists with this name\n");
                     }
 
-                } if (cmp2 == -1) { //
-                    // todo : level de temp -- (deletion puis réinsertion = calcul auto?);
+                } if (cmp2 == -1) { // Si le nom de la cellule est inférieur à celui de la cellule à insérer
+
+                    deleting_node(list, temp->ag_entry); // Suppression de la cellule déjà existante
+                    insert_sorted(list, temp->ag_entry); // Réinsertion de la cellule à la bonne place avec le bon level
+
                     final_level = level;
                 }
 
