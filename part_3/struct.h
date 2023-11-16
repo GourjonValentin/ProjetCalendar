@@ -34,6 +34,11 @@ typedef struct contact {
     t_event_list *events;
 } t_contact;
 
+typedef struct agenda_entry {
+    t_contact *contact;
+    t_event_list *events;
+} t_agenda_entry;
+
 char* scanString(void);
 
 
