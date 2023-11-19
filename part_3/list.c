@@ -131,11 +131,15 @@ void insert_sorted(t_d_list *list, t_agenda_entry *ag_entry) {
                     break; // On sort de la boucle car on a trouvé la position de la cellule à insérer
                 }
 
-            } else if (cmp <= -1) { // Si le nom de la cellule temp est inférieur à celui de la cellule à insérer (uniquement sur les x premières lettres)
+            } else if (cmp >= 1) { // Si le nom de la cellule temp est inférieur à celui de la cellule à insérer (uniquement sur les x premières lettres)
                 final_level = level;
                 break; // On sort de la boucle car on a trouvé la position de la cellule à insérer
             }
             temp = temp->next[level-1]; // Passage à la cellule suivante
+        }
+
+        if (temp == NULL && cmp != 0) { // Si on est arrivé à la fin de la liste
+            final_level = level;
         }
 
         level --; // Passage au level inférieur si rien trouvé
