@@ -21,7 +21,7 @@ void insert_head_at_level(t_d_list *list, t_d_cell* cell, int level); // todo : 
 
 void insert_head(t_d_list *list, t_d_cell* cell); // todo : remove
 
-void print_level(t_d_list *list, int level); // todo : adapt to new type
+void print_level(t_d_list *list, int level);
 
 void print_list(t_d_list *list); // todo : adapt to new type
 

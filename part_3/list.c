@@ -13,7 +13,7 @@
 // PARTIE 1
 
 t_d_list * create_list() {
-    int max_levels = 4;
+    int max_levels = 4; // levels = {0, 1, 2, 3}
     t_d_list *list = malloc(sizeof(t_d_list));
     list->heads = malloc(sizeof(t_d_cell *) * max_levels);
     list->max_levels = max_levels;
@@ -71,7 +71,7 @@ void deleting_node(t_d_list* list, t_agenda_entry* ag_entry) {
     }
 }
 
-void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
+void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){ // fixme : ici level commence à 0
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -96,51 +96,66 @@ void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
 
 
 void insert_sorted(t_d_list *list, t_agenda_entry *ag_entry) {
-    // Calcul du level de la cellule
-    int level = list -> max_levels; // On part du niveau max puis on décroit si il existe déja
-    t_d_cell *temp; // Cellule temporaire pour parcourir la liste pour la comparaison
-    int cmp, cmp2, final_level = 1;
 
-    while (level > 1 && final_level == 1) { // Comparaison à chaque level
-        temp = list->heads[level-1]; // On part de la tête du level
+    // fixme : cellule insérée au mauvais niveau
+    // Calcul du level de la cellule
+    int level = list -> max_levels - 1; // On part du niveau max puis on décroit si il existe déja
+    t_d_cell *temp, *del = NULL; // Cellule temporaire pour parcourir la liste pour la comparaison
+    int cmp, cmp2, final_level = 0;
+
+    while (level > 0 && final_level == 0) { // Comparaison à chaque level
+        temp = list->heads[level]; // On part de la tête du level
+        if (temp == NULL) {
+            final_level = level;
+            continue;
+        }
 
         cmp = -1; // On initialise la comparaison à -1 pour entrer dans la boucle
-        while (temp != NULL && cmp < 0) { // Comparaison à chaque cellule du level
-            cmp = strncmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name, list->max_levels - level + 1);
+        while (temp != NULL && cmp < 0) { // Comparaison avec chaque cellule du level
+            cmp = strncmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name, list->max_levels - level); // Comparaison des x premiers caractères uniquement (1,2, 3, 4)
 
             if (cmp == 0) { // Résultat de la comparaison des x premiers caractères
-                cmp2 = strcmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name);
+                cmp2 = strcmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name); // comparaison de tout le nom pour vérifer s'il faut décaler la cellule temp
 
                 if (cmp2 == 0) { // resultat de la comparaison des noms
-                    cmp2 = strcmp(temp->ag_entry->contact->first_name, ag_entry->contact->first_name);
+                    cmp2 = strcmp(temp->ag_entry->contact->first_name, ag_entry->contact->first_name); // comparaison de tout le prénom pour vérifer s'il faut décaler la cellule temp
 
                     if (cmp2 == 0) { // Comparaison des prénoms si noms identiques
                         printf("Error : contact already exists with this name\n");
+                        return;
                     }
 
-                } if (cmp2 == -1) { // Si le nom de la cellule est inférieur à celui de la cellule à insérer
-
-                    deleting_node(list, temp->ag_entry); // Suppression de la cellule déjà existante
-                    insert_sorted(list, temp->ag_entry); // Réinsertion de la cellule à la bonne place avec le bon level
-
+                } if (cmp2 >= 1) { // Si le nom de la cellule temp est supérieur à celui de la cellule à insérer ( et que les x premières lettre correspondent)
+                    del = temp; // marquage de la cellule temp pour la supprimer et la réinsérer
                     final_level = level;
+                    break; // On sort de la boucle car on a trouvé la position de la cellule à insérer
                 }
 
-
+            } else if (cmp <= -1) { // Si le nom de la cellule temp est inférieur à celui de la cellule à insérer (uniquement sur les x premières lettres)
+                final_level = level;
+                break; // On sort de la boucle car on a trouvé la position de la cellule à insérer
             }
             temp = temp->next[level-1]; // Passage à la cellule suivante
         }
 
-        level --; // Passage au level inférieur
+        level --; // Passage au level inférieur si rien trouvé
     }
 
     // Création de la cellule
-    t_d_cell* cell = create_cell(ag_entry, final_level);
-    insert_sorted_at_level(list, cell, final_level);
+    t_d_cell* cell = create_cell(ag_entry, final_level + 1);
+    for (int i = 0; i < final_level + 1; i++) { // level commence à 0 ici
+        insert_sorted_at_level(list, cell, i);
+    }
+
+    if (del != NULL) {
+        deleting_node(list, del->ag_entry);
+        insert_sorted(list, del->ag_entry);
+    }
+
 
 }
 
-/*
+
 
 void print_level(t_d_list *list, int level) {
     if (level < 0 || level >= list->max_levels) {
@@ -150,7 +165,7 @@ void print_level(t_d_list *list, int level) {
     t_d_cell *cell = list->heads[level];
     printf("[list head_%d]", level);
     while (cell != NULL) {
-        printf("-->[ %d|@-]", cell->value);
+        printf("-->[ %s_%s|@-]", cell->ag_entry->contact->last_name, cell->ag_entry->contact->first_name);
         cell = cell->next[level];
     }
     printf("-->NULL\n");
@@ -161,6 +176,8 @@ void print_list(t_d_list *list) {
         print_level(list, i);
     }
 }
+
+/*
 
 int n_digit(int n) {
     return floor(log10(abs(n))) + 1;

@@ -9,8 +9,10 @@
 
 char* scanString(void){
     char *string = malloc(sizeof(char)*100);
-    scanf("%s", string);
-    realloc(string, sizeof(char)*strlen(string));
+    fflush(stdin);
+    scanf("%s", string); //fixme : use fgets instead mb ?
+
+    string = realloc(string, sizeof(char)*strlen(string)+1);
     return string;
 }
 
@@ -56,9 +58,9 @@ t_event *create_event(t_date date, t_time time, t_time duration, char *name){
     return event;
 }
 
-t_agenda_entry* create_agenda_entry(char* first_name, char* last_name){
+t_agenda_entry* create_agenda_entry(t_contact *contact) {
     t_agenda_entry *agenda_entry = malloc(sizeof(t_agenda_entry));
-    agenda_entry->contact = create_contact(first_name, last_name);
+    agenda_entry->contact = contact;
     agenda_entry->events = NULL;
     return agenda_entry;
 }
