@@ -2,9 +2,9 @@
 // Created by valen on 10/11/2023.
 //
 
-#include "testing.h"
-#include "list.h"
-#include "timer.h"
+#include "testing1.h"
+#include "list1.h"
+#include "timer1.h"
 #include "../plot/pbPlots.h"
 #include "../plot/supportLib.h"
 
@@ -142,4 +142,63 @@ void test_search_time(int n_levels) {
 
     FreeAllocations();
 
+}
+
+void compareEfficiency(int max_n) {
+    printf("Comparing efficiency of classic and optimized search algorithms for a list of size %d\n", max_n);
+    printf("Times are in milliseconds\n");
+    printf("\n");
+
+    // Creating data
+    printf("Creating data...\n");
+
+    double *x = malloc(sizeof(int) * max_n);
+    double *y1 = malloc(sizeof(double) * max_n);
+    double *y2 = malloc(sizeof(double) * max_n);
+
+    for (int i = 0; i < max_n; i++) {
+        x[i] = i;
+
+        y1[i] = optimized_results[i]->total_time;
+        y2[i] = classic_results[i]->total_time;
+    }
+
+    // Plotting data
+    printf("Plotting data...\n");
+
+    _Bool success;
+    StringReference *errorMessage;
+
+    StartArenaAllocator();
+
+    ScatterPlotSeries *series1 = GetDefaultScatterPlotSeriesSettings();
+    series1->xs = x;
+    series1->xsLength = max_n;
+    series1->ys = y1;
+    series1->ysLength = max_n;
+    series1->linearInterpolation = true;
+    series1->lineType = L"solid";
+    series1->lineTypeLength = wcslen(series1->lineType);
+    series1->lineThickness = 2;
+    series1->color = CreateRGBColor(1, 0, 0);
+
+    ScatterPlotSeries *series2= GetDefaultScatterPlotSeriesSettings();
+    series2->xs = x;
+    series2->xsLength = max_n;
+    series2->ys = y2;
+    series2->ysLength = max_n;
+    series2->linearInterpolation = true;
+    series2->lineType = L"solid";
+    series2->lineTypeLength = wcslen(series2->lineType);
+    series2->lineThickness = 2;
+    series2->color = CreateRGBColor(0, 0, 1);
+
+    ScatterPlotSettings *settings = GetDefaultScatterPlotSettings();
+    settings->width = 1920;
+    settings->height = 1080;
+    settings->autoBoundaries = true;
+    settings->autoPadding = true;
+    settings->title = L"Evolution of time (ms) to search as a function of the number of searches";
+    settings->titleLength = wcslen(settings->title);
+    settings
 }

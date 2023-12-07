@@ -2,11 +2,11 @@
 // Created by valen on 10/11/2023.
 //
 
-#ifndef PROJETCALENDAR_TESTING_H
-#define PROJETCALENDAR_TESTING_H
+#ifndef PROJETCALENDAR_TESTING1_H
+#define PROJETCALENDAR_TESTING1_H
 
-#include "timer.h"
-#include "list.h"
+#include "timer1.h"
+#include "list1.h"
 
 
 // Test protocol :
@@ -26,4 +26,4 @@ time_result** test_search_time_for_given_func(t_d_list *list, int (*search_funct
 
 void test_search_time(int n_levels);
 
-#endif //PROJETCALENDAR_TESTING_H
+#endif //PROJETCALENDAR_TESTING1_H

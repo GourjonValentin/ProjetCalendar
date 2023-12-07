@@ -4,7 +4,7 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "timer.h"
+#include "timer1.h"
 
 // start the timer
 void startTimer()

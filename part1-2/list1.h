@@ -2,10 +2,10 @@
 // Created by valen on 09/11/2023.
 //
 
-#ifndef PROJETCALENDAR_LIST_H
-#define PROJETCALENDAR_LIST_H
+#ifndef PROJETCALENDAR_LIST1_H
+#define PROJETCALENDAR_LIST1_H
 
-#include "cell.h"
+#include "cell1.h"
 
 // PARTIE 1
 
@@ -40,4 +40,4 @@ int classic_search(t_d_list *list, int value);
 
 int optimized_search(t_d_list *list, int value);
 
-#endif //PROJETCALENDAR_LIST_H
+#endif //PROJETCALENDAR_LIST1_H

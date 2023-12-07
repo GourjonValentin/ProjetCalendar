@@ -2,12 +2,12 @@
 - [ ] Rechercher un contact, et proposer une complétion automatique à partir de la 3ème lettre entrée
    pour le nom (il faudra donc faire la saisie du nom de recherche caractère par caractère)
 - [x] Afficher les rendez-vous d’un contact `print_events_for_contact`
-- [ ] Créer un contact (avec insertion dans la liste)
-  - [ ] Créer un contact
+- [x] Créer un contact (avec insertion dans la liste)
+  - [x] Créer un contact `create_contact`
   - [x] Ajouter le contact à la liste des contacts `insert_sorted`
 - [ ] Créer un rendez-vous pour un contact (avec insertion dans la liste si le contact n’existe pas) ;
   - [x] Crée un rendez-vous `create_event_for_contact`
-  - [ ] Recherche si je contact existe déjà
+  - [ ] Recherche si le contact existe déjà
     - [x] Si oui, ajoute le rendez-vous à la liste des rendez-vous du contact `add_event_to_contact`
     - [x] Si non, crée le contact et ajoute le rendez-vous à la liste des rendez-vous du contact (appeler `create_contact` et `add_event_to_contact`)
 - [x] Supprimer un rendez-vous `del_event_from_contact`

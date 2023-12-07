@@ -2,7 +2,7 @@
 // Created by Tristan on 16/11/2023.
 //
 
-#ifndef PROJETCALENDAR_LIST_H
+#ifndef PROJETCALENDAR_LIST1_H
 #define PROJETCALENDAR_LIST_H
 
 #include "cell.h"
@@ -41,4 +41,4 @@ int classic_search(t_d_list *list, int value); // todo : adapt to new type
 
 int optimized_search(t_d_list *list, int value); // todo : adapt to new type
 
-#endif //PROJETCALENDAR_LIST_H
+#endif //PROJETCALENDAR_LIST1_H

@@ -2,8 +2,8 @@
 // Created by valen on 09/11/2023.
 //
 
-#include "list.h"
-#include "cell.h"
+#include "list1.h"
+#include "cell1.h"
 
 #include <stdio.h>
 #include <stdlib.h>
