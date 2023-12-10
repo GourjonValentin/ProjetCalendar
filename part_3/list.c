@@ -266,14 +266,18 @@ t_agenda_entry* search(t_d_list *agenda) {
             cell = cell->next[lvl_max - i];
 
         }
-
+        char term;
         int choice = 0;
-        printf("Quel est votre choix ?\n");
-        scanf("%d", &choice);
-        if (choice < 1 || choice > j) {
-            printf("Erreur : choix invalide\n");
-            return search(agenda);
-        }
+
+        do {
+            printf("Quel est votre choix : \n");
+            if (scanf("%d%c",&choice, &term) != 2 || term != '\n') {
+                printf("Saisie invalide\n");
+                fflush(stdin);
+                choice = -1;
+            }
+        } while (choice < 0 || choice > j);
+
         for (int k = 0; k < choice - 1; k++) {
             head = head->next[lvl_max - i];
         }

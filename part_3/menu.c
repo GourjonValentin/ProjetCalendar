@@ -12,6 +12,7 @@
 #include "cell.h"
 #include "list.h"
 #include "struct.h"
+#include "timer.h"
 
 void insertion(t_d_list *agenda) {
     printf("Inserting\n");
@@ -98,7 +99,7 @@ void del_event(t_d_list* agenda){
 
 void save_calendar(t_d_list* agenda){
     printf("Quel nom voulez-vous donner au fichier ?(sans extension)\n");
-    printf("ATTENTION : Si le fichier existe déjà, il sera écrasé\n");
+    printf("ATTENTION : Si le fichier existe deja, il sera ecrase\n");
     char *name = scanString();
     char *path = malloc(sizeof(char) * 100);
     strcpy(path, name);
@@ -179,6 +180,50 @@ void load_calendar(t_d_list* agenda) {
     fclose(file);
 }
 
+void test_insertion(t_d_list* agenda) {
+    char *path = "test_insertion.txt";
+    FILE *file = fopen(path, "r");
+    char* type;
+    type = malloc(sizeof(char) * 10);
+    char *first_name, *last_name;
+    first_name = malloc(sizeof(char) * 100);
+    last_name = malloc(sizeof(char) * 100);
+    char *name_event;
+    name_event = malloc(sizeof(char) * 100);
+    int day, month, year;
+    int hour, minute;
+    int duration_hour, duration_minute;
+
+    t_agenda_entry *agenda_entry;
+    while (fscanf(file, "%s", type) != EOF) {
+
+        if (strcmp(type, "User") == 0) {
+            fscanf(file, "%s %s", first_name, last_name);
+
+            agenda_entry = search_if_contact_exist(*agenda, first_name, last_name);
+
+            if (NULL == agenda_entry) {
+                t_contact *newContact = create_contact(first_name, last_name);
+                agenda_entry = create_agenda_entry(newContact);
+                insert_sorted(agenda, agenda_entry);
+            }
+        }
+
+        else if (strcmp(type, "Event") == 0) {
+            fscanf(file, "%s", name_event);
+            fscanf(file, "%d/%d/%d", &day, &month, &year);
+            fscanf(file, "%d/%d", &hour, &minute);
+            fscanf(file, "%d/%d", &duration_hour, &duration_minute);
+            t_date date = {day, month, year};
+            t_time time = {hour, minute};
+            t_time duration = {duration_hour, duration_minute};
+            t_event *event = create_event(date, time, duration, name_event);
+            add_event_to_contact(event, agenda_entry);
+        }
+    }
+    fclose(file);
+}
+
 void menu() {
     printf("Welcome to the calendar\n");
     int choice = 0;
@@ -223,6 +268,10 @@ void menu() {
                 break;
             case 7:
                 printf("See insertion performance\n");
+                startTimer();
+                test_insertion(calendar);
+                stopTimer();
+                displayTime();
                 break;
             case 8:
                 printf("Exit app\n");
@@ -231,7 +280,6 @@ void menu() {
             default:
                 printf("Error\n");
                 break;
-
         }
     }
 }
