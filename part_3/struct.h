@@ -48,9 +48,9 @@ t_event *create_event(t_date date, t_time time, t_time duration, char *name);
 t_agenda_entry *create_agenda_entry(t_contact *contact);
 
 void add_event_to_contact(t_event *event, t_agenda_entry *agenda_entry);
-void create_event_for_contact(t_d_list *list,t_agenda_entry *agenda_entry);
+void create_event_for_contact(t_agenda_entry *agenda_entry);
 void del_event_from_contact(t_agenda_entry *agenda_entry, char *name);
-int search_if_contact_exist(t_d_list *list, char *first_name, char *last_name);
+
 
 
 #endif //PROJETCALENDAR_STRUCT_H

@@ -80,35 +80,50 @@ void add_event_to_contact(t_event *event,t_agenda_entry *agenda_entry){
     agenda_entry->events = event_list;
 }
 
-int search_if_contact_exist(t_d_list *list, char *first_name, char *last_name){
-    t_d_cell *temp = list->heads[0];
-    while (temp != NULL){
-        if (strcmp(temp->ag_entry->contact->first_name,first_name) == 0 && strcmp(temp->ag_entry->contact->last_name,last_name) == 0){
-            return 1;
-        }
-        temp = temp->next[0];
-    }
-    return 0;
-}
 
-void create_event_for_contact(t_d_list *list,t_agenda_entry *agenda_entry){
-    if (search_if_contact_exist(list,agenda_entry->contact->first_name,agenda_entry->contact->last_name) == 0){
-        t_contact *newContact = create_contact(agenda_entry->contact->first_name,agenda_entry->contact->last_name);
-        insert_sorted(list,create_agenda_entry(newContact));
-    }
-    printf("Enter the date of the event (dd/mm/yyyy) :");
-    t_date date;
-    scanf("%d/%d/%d",&date.day,&date.month,&date.year);
-    printf("Enter the time of the event (hh:mm) :");
-    t_time time;
-    scanf("%d:%d",&time.hour,&time.minute);
-    printf("Enter the duration of the event (hh:mm) :");
-    t_time duration;
-    scanf("%d:%d",&duration.hour,&duration.minute);
-    printf("Enter the name of the event :");
+void create_event_for_contact(t_agenda_entry *agenda_entry){
+    printf("Name of the event: \n");
     char *name = scanString();
-    t_event *event = create_event(date, time, duration, name);
-    add_event_to_contact(event,agenda_entry);
+    int day;
+    int month;
+    int year;
+    int hour;
+    int minute;
+    int duration_hour;
+
+    int duration_minute;
+    do {
+        printf("Day : \n");
+        scanf("%d",&day);
+    } while (day < 1 || day > 31);
+    do {
+        printf("Month : \n");
+        scanf("%d",&month);
+    } while (month < 1 || month > 12);
+    do {
+        printf("Year : \n");
+        scanf("%d",&year);
+    } while (year < 2023);
+    do {
+        printf("Hour : \n");
+        scanf("%d",&hour);
+    } while (hour < 0 || hour > 23);
+    do {
+        printf("Minute : \n");
+        scanf("%d",&minute);
+    } while (minute < 0 || minute > 59);
+    do {
+        printf("Duration hour : \n");
+        scanf("%d",&duration_hour);
+    } while (duration_hour < 0 || duration_hour > 23);
+    do {
+        printf("Duration minute : \n");
+        scanf("%d",&duration_minute);
+    } while (duration_minute < 0 || duration_minute > 59);
+    t_date date = {day,month,year};
+    t_time time = {hour,minute};
+    t_time duration = {duration_hour,duration_minute};
+    add_event_to_contact(create_event(date,time,duration,name),agenda_entry);
 }
 
 void del_event_from_contact(t_agenda_entry *agenda_entry, char *name){
@@ -133,3 +148,4 @@ void del_event_from_contact(t_agenda_entry *agenda_entry, char *name){
     }
     printf("No event with this name");
 }
+

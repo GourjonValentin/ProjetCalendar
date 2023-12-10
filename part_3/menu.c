@@ -103,14 +103,13 @@ void menu() {
     while (choice != -1) {
         printf("What do you want to do ?\n");
         printf("1 : Search for a contact\n");
-        printf("2 : See all events for a contact\n");
-        printf("3 : Add a contact\n");
-        printf("4 : Add an event for a contact\n");
-        printf("5 : Delete an event\n");
-        printf("6 : Save events to ta file\n");
-        printf("7 : Load events from a file\n");
-        printf("8 : See insertion performance\n");
-        printf("9 : Exit app\n");
+        printf("2 : Add a contact\n");
+        printf("3 : Add an event for a contact\n");
+        printf("4 : Delete an event\n");
+        printf("5 : Save events to ta file\n");
+        printf("6 : Load events from a file\n");
+        printf("7 : See insertion performance\n");
+        printf("8 : Exit app\n");
 
         scanf("%d", &choice);
         assert(choice >= 1 && choice <= 9);
@@ -123,23 +122,24 @@ void menu() {
                 printf("Add a contact\n");
                 insertion(calendar);
                 break;
-            case 4:
+            case 3:
                 printf("Add an event for a contact\n");
                 add_event(calendar);
                 break;
-            case 5:
+            case 4:
                 printf("Delete an event\n");
+                del_event(calendar);
                 break;
-            case 6:
+            case 5:
                 printf("Save events to ta file\n");
                 break;
-            case 7:
+            case 6:
                 printf("Load events from a file\n");
                 break;
-            case 8:
+            case 7:
                 printf("See insertion performance\n");
                 break;
-            case 9:
+            case 8:
                 printf("Exit app\n");
                 break;
             default:

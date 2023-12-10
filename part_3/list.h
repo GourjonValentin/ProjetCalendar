@@ -31,5 +31,7 @@ void insert_sorted(t_d_list *list, t_agenda_entry *ag_entry);
 
 void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level); // todo : adapt to new type
 
+t_agenda_entry *search_if_contact_exist(t_d_list *list, char *first_name, char *last_name);
+
 t_agenda_entry* search(t_d_list *list);
 #endif //PROJETCALENDAR_LIST1_H
