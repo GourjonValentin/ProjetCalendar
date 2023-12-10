@@ -12,10 +12,10 @@
 
 // PARTIE 3
 
-t_d_list1 * create_list() {
+t_d_list * create_list() {
     int max_levels = 4; // levels = {0, 1, 2, 3}
-    t_d_list1 *list = malloc(sizeof(t_d_list1));
-    list->heads = malloc(sizeof(t_d_cell1 *) * max_levels);
+    t_d_list *list = malloc(sizeof(t_d_list));
+    list->heads = malloc(sizeof(t_d_cell *) * max_levels);
     list->max_levels = max_levels;
     for (int i = 0; i < max_levels; i++) {
         list->heads[i] = NULL;
@@ -24,9 +24,9 @@ t_d_list1 * create_list() {
 }
 
 
-void deleting_node_at_level(t_d_list1* list, t_agenda_entry* ag_entry, int level) {
-    t_d_cell1* temp = list->heads[level];
-    t_d_cell1* prev = NULL;
+void deleting_node_at_level(t_d_list* list, t_agenda_entry* ag_entry, int level) {
+    t_d_cell* temp = list->heads[level];
+    t_d_cell* prev = NULL;
     while (temp != NULL) {
         if (strcmp(temp->ag_entry->contact->last_name, ag_entry->contact->last_name) == 0 && strcmp(temp->ag_entry->contact->first_name, ag_entry->contact->first_name ) == 0) {
             if (prev == NULL) {
@@ -41,13 +41,13 @@ void deleting_node_at_level(t_d_list1* list, t_agenda_entry* ag_entry, int level
     }
 }
 
-void deleting_node(t_d_list1* list, t_agenda_entry* ag_entry) {
+void deleting_node(t_d_list* list, t_agenda_entry* ag_entry) {
     for (int i = 0; i < list->max_levels; i++) {
         deleting_node_at_level(list, ag_entry, i);
     }
 }
 
-void insert_sorted_at_level(t_d_list1 *list, t_d_cell1* cell, int level){
+void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -57,7 +57,7 @@ void insert_sorted_at_level(t_d_list1 *list, t_d_cell1* cell, int level){
         cell->next[level] = NULL;
         return;
     }
-    t_d_cell1 *temp = list->heads[level];
+    t_d_cell *temp = list->heads[level];
     if (strcmp(temp->ag_entry->contact->last_name, cell->ag_entry->contact->last_name) > 0) {
         list->heads[level] = cell;
         cell->next[level] = temp;
@@ -71,12 +71,12 @@ void insert_sorted_at_level(t_d_list1 *list, t_d_cell1* cell, int level){
 }
 
 
-void insert_sorted(t_d_list1 *list, t_agenda_entry *ag_entry) {
+void insert_sorted(t_d_list *list, t_agenda_entry *ag_entry) {
 
     // fixme : cellule insérée au mauvais niveau
     // Calcul du level de la cellule
     int level = list -> max_levels - 1; // On part du niveau max puis on décroit si il existe déja
-    t_d_cell1 *temp, *del = NULL; // Cellule temporaire pour parcourir la liste pour la comparaison
+    t_d_cell *temp, *del = NULL; // Cellule temporaire pour parcourir la liste pour la comparaison
     int cmp, cmp2, final_level = 0;
 
     while (level > 0 && final_level == 0) { // Comparaison à chaque level
@@ -122,7 +122,7 @@ void insert_sorted(t_d_list1 *list, t_agenda_entry *ag_entry) {
     }
 
     // Création de la cellule
-    t_d_cell1* cell = create_cell(ag_entry, final_level + 1);
+    t_d_cell* cell = create_cell(ag_entry, final_level + 1);
     for (int i = 0; i < final_level + 1; i++) { // level commence à 0 ici
         insert_sorted_at_level(list, cell, i);
     }
@@ -137,12 +137,12 @@ void insert_sorted(t_d_list1 *list, t_agenda_entry *ag_entry) {
 
 
 
-void print_level(t_d_list1 *list, int level) {
+void print_level(t_d_list *list, int level) {
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
     }
-    t_d_cell1 *cell = list->heads[level];
+    t_d_cell *cell = list->heads[level];
     printf("[list head_%d]", level);
     while (cell != NULL) {
         printf("-->[ %s_%s|@-]", cell->ag_entry->contact->last_name, cell->ag_entry->contact->first_name);
@@ -151,7 +151,7 @@ void print_level(t_d_list1 *list, int level) {
     printf("-->NULL\n");
 }
 
-void print_list(t_d_list1 *list) {
+void print_list(t_d_list *list) {
     for (int i = 0; i < list->max_levels; i++) {
         print_level(list, i);
     }
@@ -163,9 +163,9 @@ int n_digit(int n) {
     return floor(log10(abs(n))) + 1;
 }
 
-int index_of(int val, t_d_list1 list) {
+int index_of(int val, t_d_list list) {
     int index = 0;
-    t_d_cell1 *cell = list.heads[0];
+    t_d_cell *cell = list.heads[0];
     while (cell != NULL) {
         if (cell->value == val) {
             return index;
@@ -176,7 +176,7 @@ int index_of(int val, t_d_list1 list) {
     return index;
 }
 
-void print_aligned_level(t_d_list1 *list, int level) {
+void print_aligned_level(t_d_list *list, int level) {
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -187,8 +187,8 @@ void print_aligned_level(t_d_list1 *list, int level) {
     int i_prev = 0;
     int i_curr = 0;
     int delta_i = 0;
-    t_d_cell1 *prev = NULL;
-    t_d_cell1 *cell = list->heads[level];
+    t_d_cell *prev = NULL;
+    t_d_cell *cell = list->heads[level];
     printf("[list head_%d]", level);
     while (cell != NULL) {
         if (prev == NULL) {
@@ -218,7 +218,7 @@ void print_aligned_level(t_d_list1 *list, int level) {
 }
 
 
-void print_aligned_list1(t_d_list1 *list) {
+void print_aligned_list1(t_d_list *list) {
     for (int i = 0; i < list->max_levels; i++) {
         print_aligned_level1(list, i);
     }
@@ -228,15 +228,15 @@ void print_aligned_list1(t_d_list1 *list) {
 
 
 // Recherche avec complétion automatique
-t_agenda_entry* search(t_d_list1 *agenda) {
+t_agenda_entry* search(t_d_list *agenda) {
     if (agenda == NULL) {
         printf("Error : agenda is NULL\n");
         return NULL;
     }
     int i = 1;
     int lvl_max = agenda->max_levels;
-    t_d_cell1 *head = agenda->heads[lvl_max - 1];
-    t_d_cell1 *cell = head;
+    t_d_cell *head = agenda->heads[lvl_max - 1];
+    t_d_cell *cell = head;
     do {
         if (i == 1) {
             "Quelle est la première lettre du nom de la personne recherchée ?\n";
@@ -291,8 +291,8 @@ t_agenda_entry* search(t_d_list1 *agenda) {
     return NULL; // should never happen
 }
 
-t_agenda_entry *search_if_contact_exist(t_d_list1 list, char *first_name, char *last_name){
-    t_d_cell1 *temp = list.heads[0];
+t_agenda_entry *search_if_contact_exist(t_d_list list, char *first_name, char *last_name){
+    t_d_cell *temp = list.heads[0];
     while (temp != NULL){
         if (strcmp(temp->ag_entry->contact->first_name,first_name) == 0 && strcmp(temp->ag_entry->contact->last_name,last_name) == 0){
             return temp->ag_entry;

@@ -2,20 +2,20 @@
 // Created by flasque on 24/06/2022.
 //
 
-#ifndef UNTITLED1_TIMER_H
-#define UNTITLED1_TIMER_H
+#ifndef UNTITLED_TIMER_H
+#define UNTITLED_TIMER_H
 
 #include <time.h>
 
 // timer structure
-typedef struct s_timer1
+typedef struct s_timer
 {
     clock_t _start; // start time
     clock_t _end;   // end time
     double _msecs;  // duration in milliseconds
-} t_timer1;
+} t_timer;
 
-static t_timer1 _timer;
+static t_timer _timer;
 
 /**
  * @brief start the timer
@@ -47,4 +47,4 @@ char *getTimeAsString();
 
 int getTimeAsMsecs();
 
-#endif //UNTITLED1_TIMER_H
+#endif //UNTITLED_TIMER_H
