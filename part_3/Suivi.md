@@ -11,8 +11,8 @@
     - [x] Si oui, ajoute le rendez-vous à la liste des rendez-vous du contact `add_event_to_contact`
     - [x] Si non, crée le contact et ajoute le rendez-vous à la liste des rendez-vous du contact (appeler `create_contact` et `add_event_to_contact`)
 - [x] Supprimer un rendez-vous `del_event_from_contact`
-- [ ] Sauvegarder le fichier de tous les rendez-vous
-- [ ] Charger un fichier de rendez-vous
+- [x] Sauvegarder le fichier de tous les rendez-vous
+- [x] Charger un fichier de rendez-vous
 - [ ] Fournir les temps de calcul pour une insertion de nouveau contact : voir point 2)
 
 

@@ -58,7 +58,14 @@ void menu1() {
                 L = create_filled_list1(level);
                 break;
             case 6:
-
+                printf("Quelle sera le niveau max ?\n")
+                do {
+                    scanf("%d", &level);
+                    if (level < 1) {
+                        printf("Le niveau doit etre superieur ou egal a 1\n");
+                    }
+                } while (level < 1);
+                compareEfficiency(level);
             case 7:
                 printf("Au revoir !\n");
                 choice = -1;

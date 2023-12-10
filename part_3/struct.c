@@ -180,4 +180,3 @@ void del_event_from_contact(t_agenda_entry *agenda_entry, char *name){
     }
     printf("No event with this name");
 }
-

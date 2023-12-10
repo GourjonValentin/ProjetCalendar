@@ -228,7 +228,7 @@ void compareEfficiency(int max_n) {
         ByteArray *pngdata = ConvertToPNG(canvasReference->image);
         WriteToFile(pngdata, "plotcompare.png");
         DeleteImage(canvasReference->image);
-        printf("Successfully wrote to plot.png\n");
+        printf("Successfully wrote to plotcompare.png\n");
     } else{
         fprintf(stderr, "Error: ");
         for(int i = 0; i < errorMessage->stringLength; i++){
