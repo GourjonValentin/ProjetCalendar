@@ -96,6 +96,73 @@ void del_event(t_d_list* agenda){
     }
 }
 
+void save_calendar(t_d_list* agenda){
+    printf("Quel nom voulez-vous donner au fichier ?(sans extension)\n");
+    printf("ATTENTION : Si le fichier existe déjà, il sera écrasé\n");
+    char *name = scanString();
+    char *path = malloc(sizeof(char) * 100);
+    strcpy(path, name);
+    strcat(path, ".txt");
+
+    FILE *file = fopen(path, "w");
+    if (file == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+    t_d_cell *temp = agenda->heads[0];
+    while (temp != NULL) {
+        fprintf(file, "%s %s\n", temp->ag_entry->contact->first_name, temp->ag_entry->contact->last_name);
+        t_event_list *temp_event = temp->ag_entry->events;
+        while (temp_event != NULL) {
+            fprintf(file, "%s\n", temp_event->event->name);
+            fprintf(file, "%d/%d/%d\n", temp_event->event->date.day, temp_event->event->date.month, temp_event->event->date.year);
+            fprintf(file, "%dh%d\n", temp_event->event->time.hour, temp_event->event->time.minute);
+            fprintf(file, "%dh%d\n", temp_event->event->duration.hour, temp_event->event->duration.minute);
+            temp_event = temp_event->next;
+        }
+        temp = temp->next[0];
+    }
+    fclose(file);
+}
+
+void load_calendar(t_d_list* agenda) {
+    printf("Quel fichier voulez-vous charger ?(sans extension)\n");
+    char *name = scanString();
+    char *path = malloc(sizeof(char) * 100);
+    strcpy(path, name);
+    strcat(path, ".txt");
+
+    FILE *file = fopen(path, "r");
+    if (file == NULL) {
+        printf("Error opening file!\n");
+        exit(1);
+    }
+    char *first_name, *last_name;
+    char *name_event;
+    int day, month, year;
+    int hour, minute;
+    int duration_hour, duration_minute;
+    while (fscanf(file, "%s %s", first_name, last_name) != EOF) {
+        t_agenda_entry *agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+        if (NULL == agenda_entry) {
+            t_contact *newContact = create_contact(first_name, last_name);
+            agenda_entry = create_agenda_entry(newContact);
+            insert_sorted(agenda, agenda_entry);
+        }
+        while (fscanf(file, "%s", name_event) != EOF) {
+            fscanf(file, "%d/%d/%d", &day, &month, &year);
+            fscanf(file, "%dh%d", &hour, &minute);
+            fscanf(file, "%dh%d", &duration_hour, &duration_minute);
+            t_date date = {day, month, year};
+            t_time time = {hour, minute};
+            t_time duration = {duration_hour, duration_minute};
+            t_event *event = create_event(date, time, duration, name_event);
+            add_event_to_contact(event, agenda_entry);
+        }
+    }
+    fclose(file);
+}
+
 void menu() {
     printf("Welcome to the calendar\n");
     int choice = 0;
@@ -132,6 +199,7 @@ void menu() {
                 break;
             case 5:
                 printf("Save events to ta file\n");
+                save_calendar(calendar);
                 break;
             case 6:
                 printf("Load events from a file\n");

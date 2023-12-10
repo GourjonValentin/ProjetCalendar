@@ -84,41 +84,70 @@ void add_event_to_contact(t_event *event,t_agenda_entry *agenda_entry){
 void create_event_for_contact(t_agenda_entry *agenda_entry){
     printf("Name of the event: \n");
     char *name = scanString();
-    int day;
-    int month;
-    int year;
-    int hour;
-    int minute;
-    int duration_hour;
+    int day = -1;
+    int month = 1;
+    int year = -1;
+    int hour = -1;
+    int minute = -1;
+    int duration_hour = -1;
+    int duration_minute = -1;
+    char term;
 
-    int duration_minute;
     do {
         printf("Day : \n");
-        scanf("%d",&day);
+        if (scanf("%d%c",&day, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            day = -1;
+        }
     } while (day < 1 || day > 31);
     do {
         printf("Month : \n");
-        scanf("%d",&month);
+        if (scanf("%d%c",&month, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            month = -1;
+        }
     } while (month < 1 || month > 12);
     do {
         printf("Year : \n");
-        scanf("%d",&year);
+        if (scanf("%d%c",&year, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            year = -1;
+        }
     } while (year < 2023);
     do {
         printf("Hour : \n");
-        scanf("%d",&hour);
+        if (scanf("%d%c",&hour, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            hour = -1;
+        }
     } while (hour < 0 || hour > 23);
     do {
         printf("Minute : \n");
-        scanf("%d",&minute);
+        if (scanf("%d%c",&minute, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            minute = -1;
+        }
     } while (minute < 0 || minute > 59);
     do {
         printf("Duration hour : \n");
-        scanf("%d",&duration_hour);
+        if (scanf("%d%c",&duration_hour, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            duration_hour = -1;
+        }
     } while (duration_hour < 0 || duration_hour > 23);
     do {
         printf("Duration minute : \n");
-        scanf("%d",&duration_minute);
+        if (scanf("%d%c",&duration_minute, &term) != 2 || term != '\n') {
+            printf("Saisie invalide\n");
+            fflush(stdin);
+            duration_minute = -1;
+        }
     } while (duration_minute < 0 || duration_minute > 59);
     t_date date = {day,month,year};
     t_time time = {hour,minute};
