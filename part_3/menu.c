@@ -210,6 +210,7 @@ void menu() {
                 break;
             case 8:
                 printf("Exit app\n");
+                choice = -1;
                 break;
             default:
                 printf("Error\n");
