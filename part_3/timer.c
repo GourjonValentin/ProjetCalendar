@@ -4,16 +4,16 @@
 
 #include <stdio.h>
 #include <malloc.h>
-#include "timer1.h"
+#include "timer.h"
 
 // start the timer
-void startTimer1()
+void startTimer()
 {
     _timer._start = clock();
 }
 
 // stop the timer and compute the duration in milliseconds
-void stopTimer1()
+void stopTimer()
 {
     _timer._end = clock();
     // compute the duration in milliseconds wrt CLOCKS_PER_SEC
@@ -21,15 +21,15 @@ void stopTimer1()
 }
 
 // display the time
-void displayTime1()
+void displayTime()
 {
-    // display the time using getTimeAsString1()
-    printf("%s\n", getTimeAsString1());
+    // display the time using getTimeAsString()
+    printf("%s\n", getTimeAsString());
     return;
 }
 
 // return a string with the time in seconds and milliseconds
-char *getTimeAsString1()
+char *getTimeAsString()
 {
     // return a string with the time in seconds and milliseconds
     // format : integers, with 3 digits, fill with 0
@@ -44,7 +44,7 @@ char *getTimeAsString1()
     return buffer;
 }
 
-int getTimeAsMsecs1()
+int getTimeAsMsecs()
 {
     return (int)_timer._msecs;
 }

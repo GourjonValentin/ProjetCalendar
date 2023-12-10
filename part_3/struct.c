@@ -45,8 +45,10 @@ void print_event_from_contact(t_agenda_entry *ag_entry){
 
 t_contact *create_contact(char* first_name, char* last_name){
     t_contact *contact = malloc(sizeof(t_contact));
-    contact->first_name = string_to_low(first_name);
-    contact->last_name = string_to_low(last_name);
+    contact->first_name = malloc(sizeof(char)*strlen(first_name)+1);
+    contact->last_name = malloc(sizeof(char)*strlen(last_name)+1);
+    contact->first_name = strcpy(contact->first_name,string_to_low(first_name));
+    contact->last_name = strcpy(contact->last_name, string_to_low(last_name));
     return contact;
 }
 
@@ -55,7 +57,8 @@ t_event *create_event(t_date date, t_time time, t_time duration, char *name){
     event->date = date;
     event->time = time;
     event->duration = duration;
-    event->name = name;
+    event->name = malloc(sizeof(char)*strlen(name)+1);
+    event->name = strcpy(event->name,name);
     return event;
 }
 

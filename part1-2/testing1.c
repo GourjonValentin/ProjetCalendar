@@ -30,10 +30,10 @@ time_result** test_search_time_for_given_func(t_d_list *list, int (*search_funct
 
         for (int j = 0; j < n; j++) {
             int value = rand() % (int)(pow(2, list->max_levels) - 1);
-            startTimer();
+            startTimer1();
             search_function(list, value);
-            stopTimer();
-            mean += getTimeAsMsecs();
+            stopTimer1();
+            mean += getTimeAsMsecs1();
         }
         printf("Total time for n = %d : %f\n", n, mean);
         res->total_time = mean;
@@ -74,6 +74,7 @@ void test_search_time(int n_levels) {
 
     for (int i = 0; i < 3; i++) {
         x[i] = classic_results[i]->n;
+
         y1[i] = optimized_results[i]->total_time;
         y2[i] = classic_results[i]->total_time;
     }
@@ -144,7 +145,7 @@ void test_search_time(int n_levels) {
 
 }
 
-/* todo : Not finished
+
 void compareEfficiency(int max_n) {
     printf("Comparing efficiency of classic and optimized search algorithms for a list of size %d\n", max_n);
     printf("Times are in milliseconds\n");
@@ -157,11 +158,21 @@ void compareEfficiency(int max_n) {
     double *y1 = malloc(sizeof(double) * max_n);
     double *y2 = malloc(sizeof(double) * max_n);
 
-    for (int i = 0; i < max_n; i++) {
+    t_d_list *L;
+    time_result* classic, *optimized;
+    for (int i = 1; i < max_n; i++) {
+        L = create_filled_list1(i);
         x[i] = i;
-
-        y1[i] = optimized_results[i]->total_time;
-        y2[i] = classic_results[i]->total_time;
+        classic = test_search_time_for_given_func(L, &classic_search1)[2];
+        optimized = test_search_time_for_given_func(L, &optimized_search1)[2];
+        y1[i] = classic->total_time;
+        y2[i] = optimized->total_time;
+    }
+    //Affichage des tableaux
+    for (int i = 0; i < max_n; i++) {
+        printf("x[%d] = %f\n", i, x[i]);
+        printf("y1[%d] = %f\n", i, y1[i]);
+        printf("y2[%d] = %f\n", i, y2[i]);
     }
 
     // Plotting data
@@ -201,5 +212,30 @@ void compareEfficiency(int max_n) {
     settings->autoPadding = true;
     settings->title = L"Evolution of time (ms) to search as a function of the number of searches";
     settings->titleLength = wcslen(settings->title);
-    settings
-}*/
+    settings->xLabel = L"Number of searches";
+    settings->xLabelLength = wcslen(settings->xLabel);
+    settings->yLabel = L"Time (ms)";
+    settings->yLabelLength = wcslen(settings->yLabel);
+    ScatterPlotSeries *s [] = {series1, series2};
+    settings->scatterPlotSeries = s;
+    settings->scatterPlotSeriesLength = 2;
+
+    RGBABitmapImageReference *canvasReference = CreateRGBABitmapImageReference();
+    errorMessage = (StringReference *)malloc(sizeof(StringReference));
+    success = DrawScatterPlotFromSettings(canvasReference, settings, errorMessage);
+
+    if(success){
+        ByteArray *pngdata = ConvertToPNG(canvasReference->image);
+        WriteToFile(pngdata, "plotcompare.png");
+        DeleteImage(canvasReference->image);
+        printf("Successfully wrote to plot.png\n");
+    } else{
+        fprintf(stderr, "Error: ");
+        for(int i = 0; i < errorMessage->stringLength; i++){
+            fprintf(stderr, "%c", errorMessage->string[i]);
+        }
+        fprintf(stderr, "\n");
+    }
+
+    FreeAllocations();
+}

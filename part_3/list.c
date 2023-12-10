@@ -287,8 +287,8 @@ t_agenda_entry* search(t_d_list *agenda) {
     return NULL; // should never happen
 }
 
-t_agenda_entry *search_if_contact_exist(t_d_list *list, char *first_name, char *last_name){
-    t_d_cell *temp = list->heads[0];
+t_agenda_entry *search_if_contact_exist(t_d_list list, char *first_name, char *last_name){
+    t_d_cell *temp = list.heads[0];
     while (temp != NULL){
         if (strcmp(temp->ag_entry->contact->first_name,first_name) == 0 && strcmp(temp->ag_entry->contact->last_name,last_name) == 0){
             return temp->ag_entry;

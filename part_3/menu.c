@@ -49,7 +49,7 @@ void add_event(t_d_list* agenda) {
 
 
     // Recherche si contact existe déjà
-    t_agenda_entry *agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+    t_agenda_entry *agenda_entry = search_if_contact_exist(*agenda, first_name, last_name);
     if (NULL == agenda_entry){
         t_contact *newContact = create_contact(first_name,last_name);
         agenda_entry = create_agenda_entry(newContact);
@@ -67,7 +67,7 @@ void del_event(t_d_list* agenda){
     printf("Enter last name\n");
     last_name = scanString();
 
-    t_agenda_entry *agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+    t_agenda_entry *agenda_entry = search_if_contact_exist(*agenda, first_name, last_name);
     if (NULL == agenda_entry) {
         printf("This contact doesn't exist\n");
     }
@@ -153,15 +153,18 @@ void load_calendar(t_d_list* agenda) {
 
         if (strcmp(type, "User") == 0) {
             fscanf(file, "%s %s", first_name, last_name);
-            agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+
+            agenda_entry = search_if_contact_exist(*agenda, first_name, last_name);
+
             if (NULL == agenda_entry) {
                 t_contact *newContact = create_contact(first_name, last_name);
                 agenda_entry = create_agenda_entry(newContact);
                 insert_sorted(agenda, agenda_entry);
             }
+
         }
 
-        if (strcmp(type, "Event") == 0) {
+        else if (strcmp(type, "Event") == 0) {
             fscanf(file, "%s", name_event);
             fscanf(file, "%d/%d/%d", &day, &month, &year);
             fscanf(file, "%d/%d", &hour, &minute);

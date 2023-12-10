@@ -28,4 +28,6 @@ add_executable(ProjetCalendar
         part_3/insertion_test.c
         part_3/insertion_test.h
         part_3/menu.c
-        part_3/menu.h)
+        part_3/menu.h
+        part_3/timer.c
+        part_3/timer.h)

@@ -26,4 +26,5 @@ time_result** test_search_time_for_given_func(t_d_list *list, int (*search_funct
 
 void test_search_time(int n_levels);
 
+void compareEfficiency(int n_levels);
 #endif //PROJETCALENDAR_TESTING1_H
