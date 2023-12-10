@@ -111,13 +111,13 @@ void save_calendar(t_d_list* agenda){
     }
     t_d_cell *temp = agenda->heads[0];
     while (temp != NULL) {
-        fprintf(file, "%s %s\n", temp->ag_entry->contact->first_name, temp->ag_entry->contact->last_name);
+        fprintf(file, "User\n%s %s\n", temp->ag_entry->contact->first_name, temp->ag_entry->contact->last_name);
         t_event_list *temp_event = temp->ag_entry->events;
         while (temp_event != NULL) {
-            fprintf(file, "%s\n", temp_event->event->name);
+            fprintf(file, "Event\n%s\n", temp_event->event->name);
             fprintf(file, "%d/%d/%d\n", temp_event->event->date.day, temp_event->event->date.month, temp_event->event->date.year);
-            fprintf(file, "%dh%d\n", temp_event->event->time.hour, temp_event->event->time.minute);
-            fprintf(file, "%dh%d\n", temp_event->event->duration.hour, temp_event->event->duration.minute);
+            fprintf(file, "%d/%d\n", temp_event->event->time.hour, temp_event->event->time.minute);
+            fprintf(file, "%d/%d\n", temp_event->event->duration.hour, temp_event->event->duration.minute);
             temp_event = temp_event->next;
         }
         temp = temp->next[0];
@@ -137,22 +137,35 @@ void load_calendar(t_d_list* agenda) {
         printf("Error opening file!\n");
         exit(1);
     }
+    char* type;
+    type = malloc(sizeof(char) * 10);
     char *first_name, *last_name;
+    first_name = malloc(sizeof(char) * 100);
+    last_name = malloc(sizeof(char) * 100);
     char *name_event;
+    name_event = malloc(sizeof(char) * 100);
     int day, month, year;
     int hour, minute;
     int duration_hour, duration_minute;
-    while (fscanf(file, "%s %s", first_name, last_name) != EOF) {
-        t_agenda_entry *agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
-        if (NULL == agenda_entry) {
-            t_contact *newContact = create_contact(first_name, last_name);
-            agenda_entry = create_agenda_entry(newContact);
-            insert_sorted(agenda, agenda_entry);
+
+    t_agenda_entry *agenda_entry;
+    while (fscanf(file, "%s", type) != EOF) {
+
+        if (strcmp(type, "User") == 0) {
+            fscanf(file, "%s %s", first_name, last_name);
+            agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+            if (NULL == agenda_entry) {
+                t_contact *newContact = create_contact(first_name, last_name);
+                agenda_entry = create_agenda_entry(newContact);
+                insert_sorted(agenda, agenda_entry);
+            }
         }
-        while (fscanf(file, "%s", name_event) != EOF) {
+
+        if (strcmp(type, "Event") == 0) {
+            fscanf(file, "%s", name_event);
             fscanf(file, "%d/%d/%d", &day, &month, &year);
-            fscanf(file, "%dh%d", &hour, &minute);
-            fscanf(file, "%dh%d", &duration_hour, &duration_minute);
+            fscanf(file, "%d/%d", &hour, &minute);
+            fscanf(file, "%d/%d", &duration_hour, &duration_minute);
             t_date date = {day, month, year};
             t_time time = {hour, minute};
             t_time duration = {duration_hour, duration_minute};
