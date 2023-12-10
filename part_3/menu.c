@@ -64,6 +64,8 @@ void menu() {
                 break;
             case 2:
                 printf("See all events for a contact\n");
+                // temp
+                print_list(calendar);
                 break;
             case 3:
                 printf("Add a contact\n");

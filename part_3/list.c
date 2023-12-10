@@ -229,9 +229,14 @@ void print_aligned_list1(t_d_list *list) {
 
 // Recherche avec complétion automatique
 t_agenda_entry* search(t_d_list *agenda) {
+    if (agenda == NULL) {
+        printf("Error : agenda is NULL\n");
+        return NULL;
+    }
     int i = 1;
     int lvl_max = agenda->max_levels;
-    t_d_cell *cell = agenda->heads[lvl_max - i];
+    t_d_cell *head = agenda->heads[lvl_max - 1];
+    t_d_cell *cell = head;
     do {
         if (i == 1) {
             "Quelle est la première lettre du nom de la personne recherchée ?\n";
@@ -244,7 +249,7 @@ t_agenda_entry* search(t_d_list *agenda) {
         }
 
         int j = 0;
-        while (cell != NULL) {
+        while (cell != NULL  && (i == 0 ? 1 : strncmp(cell->ag_entry->contact->last_name, head->ag_entry->contact->last_name, i-1) == 0)) {
             j++;
             if (j == 0) {
                 printf("Voici les possibilités :\n");
@@ -261,17 +266,18 @@ t_agenda_entry* search(t_d_list *agenda) {
             cell = cell->next[lvl_max - i];
 
         }
+
         int choice = 0;
         printf("Quel est votre choix ?\n");
         scanf("%d", &choice);
-        if (choice <= 1 || choice > j) {
+        if (choice < 1 || choice > j) {
             printf("Erreur : choix invalide\n");
             return search(agenda);
         }
-        cell = agenda->heads[lvl_max - i];
         for (int k = 0; k < choice - 1; k++) {
-            cell = cell->next[lvl_max - i];
+            head = head->next[lvl_max - i];
         }
+        cell = head;
         if (i == 4) {
             return cell->ag_entry;
         }

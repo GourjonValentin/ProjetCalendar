@@ -26,10 +26,10 @@ char* string_to_low(char* string) {
 }
 
 void print_event_from_contact(t_agenda_entry *ag_entry){
-    printf("%s",ag_entry->contact->first_name);
-    printf("%s",ag_entry->contact->last_name);
+    printf("%s ",ag_entry->contact->first_name);
+    printf("%\n",ag_entry->contact->last_name);
     if (ag_entry->events == NULL){
-        printf("No events for this contact");
+        printf("No events for this contact\n");
         return;
     }
     t_event_list *temp = ag_entry->events;

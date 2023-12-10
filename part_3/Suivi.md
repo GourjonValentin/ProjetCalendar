@@ -1,6 +1,6 @@
 ## Task list pour la partie 3
 - [ ] Rechercher un contact, et proposer une complétion automatique à partir de la 3ème lettre entrée
-   pour le nom (il faudra donc faire la saisie du nom de recherche caractère par caractère)
+   pour le nom (il faudra donc faire la saisie du nom de recherche caractère par caractère) - WOrk In PRogress
 - [x] Afficher les rendez-vous d’un contact `print_events_for_contact`
 - [x] Créer un contact (avec insertion dans la liste)
   - [x] Créer un contact `create_contact`
