@@ -5,8 +5,6 @@
 #ifndef PROJETCALENDAR_STRUCT_H
 #define PROJETCALENDAR_STRUCT_H
 
-#include "list.h"
-
 typedef struct date {
     int day;
     int month;

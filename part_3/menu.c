@@ -39,6 +39,63 @@ void searching(t_d_list *agenda) {
 
 }
 
+void add_event(t_d_list* agenda) {
+    // Nom et prénom du contact
+    char *first_name, *last_name;
+    printf("Enter first name\n");
+    first_name = scanString();
+    printf("Enter last name\n");
+    last_name = scanString();
+
+
+    // Recherche si contact existe déjà
+    t_agenda_entry *agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+    if (NULL == agenda_entry){
+        t_contact *newContact = create_contact(first_name,last_name);
+        agenda_entry = create_agenda_entry(newContact);
+        insert_sorted(agenda,agenda_entry);
+    }
+    // Ajout de l'event
+    create_event_for_contact(agenda_entry);
+}
+
+void del_event(t_d_list* agenda){
+    // Nom et prénom du contact
+    char *first_name, *last_name;
+    printf("Enter first name\n");
+    first_name = scanString();
+    printf("Enter last name\n");
+    last_name = scanString();
+
+    t_agenda_entry *agenda_entry = search_if_contact_exist(agenda, first_name, last_name);
+    if (NULL == agenda_entry) {
+        printf("This contact doesn't exist\n");
+    }
+    else {
+        //afficher les events
+        print_event_from_contact(agenda_entry);
+
+        //demander le nom de l'event à supprimer
+        printf("Enter the name of the event you want to delete\n");
+        char *name = scanString();
+        t_event_list *temp = agenda_entry->events;
+        t_event_list *prev = NULL;
+        while (temp != NULL) {
+            if (strcmp(temp->event->name, name) == 0) {
+                if (prev == NULL) {
+                    agenda_entry->events = temp->next;
+                } else {
+                    prev->next = temp->next;
+                }
+                return;
+            }
+            prev = temp;
+            temp = temp->next;
+        }
+        printf("This event doesn't exist\n");
+    }
+}
+
 void menu() {
     printf("Welcome to the calendar\n");
     int choice = 0;
@@ -63,16 +120,12 @@ void menu() {
                 searching(calendar);
                 break;
             case 2:
-                printf("See all events for a contact\n");
-                // temp
-                print_list(calendar);
-                break;
-            case 3:
                 printf("Add a contact\n");
                 insertion(calendar);
                 break;
             case 4:
                 printf("Add an event for a contact\n");
+                add_event(calendar);
                 break;
             case 5:
                 printf("Delete an event\n");

@@ -28,17 +28,17 @@ char* string_to_low(char* string) {
 
 void print_event_from_contact(t_agenda_entry *ag_entry){
     printf("%s ",ag_entry->contact->first_name);
-    printf("%\n",ag_entry->contact->last_name);
+    printf("%s\n",ag_entry->contact->last_name);
     if (ag_entry->events == NULL){
         printf("No events for this contact\n");
         return;
     }
     t_event_list *temp = ag_entry->events;
     while (temp != NULL){
-        printf("Name : %s\n",temp->event->name);
-        printf("Date : %d/%d/%d\n",temp->event->date.day,temp->event->date.month,temp->event->date.year);
-        printf("Time : %d:%d\n",temp->event->time.hour,temp->event->time.minute);
-        printf("Duration : %d:%d\n",temp->event->duration.hour,temp->event->duration.minute);
+        printf("Name : %s\n\r",temp->event->name);
+        printf("Date : %d/%d/%d\n\r",temp->event->date.day,temp->event->date.month,temp->event->date.year);
+        printf("Time : %dh%dm\n\r",temp->event->time.hour,temp->event->time.minute);
+        printf("Duration : %dh%dm\n\r",temp->event->duration.hour,temp->event->duration.minute);
         temp = temp->next;
     }
 }
