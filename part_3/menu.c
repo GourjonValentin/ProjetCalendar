@@ -203,6 +203,7 @@ void menu() {
                 break;
             case 6:
                 printf("Load events from a file\n");
+                load_calendar(calendar);
                 break;
             case 7:
                 printf("See insertion performance\n");
