@@ -6,6 +6,7 @@
 #include "stdlib.h"
 #include "stdio.h"
 #include "string.h"
+#include "list.h"
 
 char* scanString(void){
     char *string = malloc(sizeof(char)*100);
@@ -79,7 +80,22 @@ void add_event_to_contact(t_event *event,t_agenda_entry *agenda_entry){
     agenda_entry->events = event_list;
 }
 
-void create_event_for_contact(t_agenda_entry *agenda_entry){
+int search_if_contact_exist(t_d_list *list, char *first_name, char *last_name){
+    t_d_cell *temp = list->heads[0];
+    while (temp != NULL){
+        if (strcmp(temp->ag_entry->contact->first_name,first_name) == 0 && strcmp(temp->ag_entry->contact->last_name,last_name) == 0){
+            return 1;
+        }
+        temp = temp->next[0];
+    }
+    return 0;
+}
+
+void create_event_for_contact(t_d_list *list,t_agenda_entry *agenda_entry){
+    if (search_if_contact_exist(list,agenda_entry->contact->first_name,agenda_entry->contact->last_name) == 0){
+        t_contact *newContact = create_contact(agenda_entry->contact->first_name,agenda_entry->contact->last_name);
+        insert_sorted(list,create_agenda_entry(newContact));
+    }
     printf("Enter the date of the event (dd/mm/yyyy) :");
     t_date date;
     scanf("%d/%d/%d",&date.day,&date.month,&date.year);
