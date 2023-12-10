@@ -14,7 +14,7 @@
 #include "struct.h"
 #include "timer.h"
 
-void insertion(t_d_list *agenda) {
+void insertion(t_d_list1 *agenda) {
     printf("Inserting\n");
     char *first_name, *last_name;
     printf("Enter first name\n");
@@ -27,7 +27,7 @@ void insertion(t_d_list *agenda) {
     printf("Inserted\n");
 }
 
-void searching(t_d_list *agenda) {
+void searching(t_d_list1 *agenda) {
     printf("Searching\n");
     t_agenda_entry* result = search(agenda);
     if (result == NULL) {
@@ -40,7 +40,7 @@ void searching(t_d_list *agenda) {
 
 }
 
-void add_event(t_d_list* agenda) {
+void add_event(t_d_list1* agenda) {
     // Nom et prénom du contact
     char *first_name, *last_name;
     printf("Enter first name\n");
@@ -60,7 +60,7 @@ void add_event(t_d_list* agenda) {
     create_event_for_contact(agenda_entry);
 }
 
-void del_event(t_d_list* agenda){
+void del_event(t_d_list1* agenda){
     // Nom et prénom du contact
     char *first_name, *last_name;
     printf("Enter first name\n");
@@ -97,7 +97,7 @@ void del_event(t_d_list* agenda){
     }
 }
 
-void save_calendar(t_d_list* agenda){
+void save_calendar(t_d_list1* agenda){
     printf("Quel nom voulez-vous donner au fichier ?(sans extension)\n");
     printf("ATTENTION : Si le fichier existe deja, il sera ecrase\n");
     char *name = scanString();
@@ -110,7 +110,7 @@ void save_calendar(t_d_list* agenda){
         printf("Error opening file!\n");
         exit(1);
     }
-    t_d_cell *temp = agenda->heads[0];
+    t_d_cell1 *temp = agenda->heads[0];
     while (temp != NULL) {
         fprintf(file, "User\n%s %s\n", temp->ag_entry->contact->first_name, temp->ag_entry->contact->last_name);
         t_event_list *temp_event = temp->ag_entry->events;
@@ -126,7 +126,7 @@ void save_calendar(t_d_list* agenda){
     fclose(file);
 }
 
-void load_calendar(t_d_list* agenda) {
+void load_calendar(t_d_list1* agenda) {
     printf("Quel fichier voulez-vous charger ?(sans extension)\n");
     char *name = scanString();
     char *path = malloc(sizeof(char) * 100);
@@ -180,7 +180,7 @@ void load_calendar(t_d_list* agenda) {
     fclose(file);
 }
 
-void test_insertion(t_d_list* agenda) {
+void test_insertion(t_d_list1* agenda) {
     char *path = "test_insertion.txt";
     FILE *file = fopen(path, "r");
     char* type;
@@ -227,7 +227,7 @@ void test_insertion(t_d_list* agenda) {
 void menu() {
     printf("Welcome to the calendar\n");
     int choice = 0;
-    t_d_list *calendar = create_list();
+    t_d_list1 *calendar = create_list();
     while (choice != -1) {
         printf("What do you want to do ?\n");
         printf("1 : Search for a contact\n");

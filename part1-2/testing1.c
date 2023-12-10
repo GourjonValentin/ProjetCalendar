@@ -18,7 +18,7 @@
 // 3. Repeat 2. 1000 times / 10000 times / 100000 times
 
 // function that execute the above protocol for a given search function
-time_result** test_search_time_for_given_func(t_d_list *list, int (*search_function)(t_d_list *, int)) {
+time_result** test_search_time_for_given_func(t_d_list1 *list, int (*search_function)(t_d_list1 *, int)) {
 
     time_result **results = malloc(sizeof(time_result) * 3);
 
@@ -49,7 +49,7 @@ time_result** test_search_time_for_given_func(t_d_list *list, int (*search_funct
 }
 
 void test_search_time(int n_levels) {
-    t_d_list *L;
+    t_d_list1 *L;
     time_result** classic_results, **optimized_results;
     L = create_filled_list1(n_levels);
     //print_aligned_list1(L);
@@ -158,7 +158,7 @@ void compareEfficiency(int max_n) {
     double *y1 = malloc(sizeof(double) * max_n);
     double *y2 = malloc(sizeof(double) * max_n);
 
-    t_d_list *L;
+    t_d_list1 *L;
     time_result* classic, *optimized;
     for (int i = 1; i < max_n; i++) {
         L = create_filled_list1(i);

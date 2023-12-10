@@ -22,7 +22,7 @@ typedef struct result {
     double mean_time;
 } time_result;
 
-time_result** test_search_time_for_given_func(t_d_list *list, int (*search_function)(t_d_list *, int));
+time_result** test_search_time_for_given_func(t_d_list1 *list, int (*search_function)(t_d_list1 *, int));
 
 void test_search_time(int n_levels);
 

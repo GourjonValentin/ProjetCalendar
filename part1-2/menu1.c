@@ -21,7 +21,7 @@ void menu1() {
     printf("Quel est le nombre de niveaux de la liste ?\n");
     scanf("%d", &level);
 
-    t_d_list *L = create_filled_list1(level);
+    t_d_list1 *L = create_filled_list1(level);
     int choice = 0;
     do {
         printf("Que voulez-vous faire ?\n");

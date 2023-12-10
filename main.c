@@ -12,6 +12,5 @@ int main(){
     setvbuf(stdout, NULL, _IONBF, 0);
 
 
-    compareEfficiency(16);
     return 0;
 };

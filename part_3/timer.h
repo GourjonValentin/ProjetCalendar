@@ -8,14 +8,14 @@
 #include <time.h>
 
 // timer structure
-typedef struct s_timer
+typedef struct s_timer1
 {
     clock_t _start; // start time
     clock_t _end;   // end time
     double _msecs;  // duration in milliseconds
-} t_timer;
+} t_timer1;
 
-static t_timer _timer;
+static t_timer1 _timer;
 
 /**
  * @brief start the timer

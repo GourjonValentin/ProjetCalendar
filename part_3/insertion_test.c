@@ -12,7 +12,7 @@
 #include <string.h>
 
 void insertion_test() {
-    t_d_list * agenda = create_list();
+    t_d_list1 * agenda = create_list();
     char *input = malloc(sizeof(char) * 100);
     input = "init";
     while (strcmp(input, "stop") != 0){
