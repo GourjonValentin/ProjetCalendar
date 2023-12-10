@@ -7,12 +7,13 @@
 #include "part_3/cell.h"
 #include "part_3/struct.h"
 #include "part_3/insertion_test.h"
+#include "part_3/menu.h"
 
 
 int main(){
     setvbuf(stdout, NULL, _IONBF, 0);
 
 
-    insertion_test();
+    menu();
     return 0;
 };

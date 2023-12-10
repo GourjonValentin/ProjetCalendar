@@ -11,7 +11,7 @@
 
 // PARTIE 1
 
-t_d_list * create_list(int max_levels) {
+t_d_list * create_list1(int max_levels) {
     t_d_list *list = malloc(sizeof(t_d_list));
     list->heads = malloc(sizeof(t_d_cell *) * max_levels);
     list->max_levels = max_levels;
@@ -21,7 +21,7 @@ t_d_list * create_list(int max_levels) {
     return list;
 }
 
-void insert_head_at_level(t_d_list *list, t_d_cell* cell, int level) {
+void insert_head_at_level1(t_d_list *list, t_d_cell* cell, int level) {
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -36,13 +36,13 @@ void insert_head_at_level(t_d_list *list, t_d_cell* cell, int level) {
     cell->next[level] = temp;
 }
 
-void insert_head(t_d_list *list, t_d_cell* cell) {
+void insert_head1(t_d_list *list, t_d_cell* cell) {
     for (int i = 0; i < cell->max_levels; i++) {
-        insert_head_at_level(list, cell, i);
+        insert_head_at_level1(list, cell, i);
     }
 }
 
-void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
+void insert_sorted_at_level1(t_d_list *list, t_d_cell* cell, int level){
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -66,13 +66,13 @@ void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
 }
 
 
-void insert_sorted(t_d_list *list, t_d_cell* cell) {
+void insert_sorted1(t_d_list *list, t_d_cell* cell) {
     for (int i = 0; i < cell->max_levels; i++) {
-        insert_sorted_at_level(list, cell, i);
+        insert_sorted_at_level1(list, cell, i);
     }
 }
 
-void print_level(t_d_list *list, int level) {
+void print_level1(t_d_list *list, int level) {
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -86,9 +86,9 @@ void print_level(t_d_list *list, int level) {
     printf("-->NULL\n");
 }
 
-void print_list(t_d_list *list) {
+void print_list1(t_d_list *list) {
     for (int i = 0; i < list->max_levels; i++) {
-        print_level(list, i);
+        print_level1(list, i);
     }
 }
 
@@ -109,7 +109,7 @@ int index_of(int val, t_d_list list) {
     return index;
 }
 
-void print_aligned_level(t_d_list *list, int level) {
+void print_aligned_level1(t_d_list *list, int level) {
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -151,9 +151,9 @@ void print_aligned_level(t_d_list *list, int level) {
 }
 
 
-void print_aligned_list(t_d_list *list) {
+void print_aligned_list1(t_d_list *list) {
     for (int i = 0; i < list->max_levels; i++) {
-        print_aligned_level(list, i);
+        print_aligned_level1(list, i);
     }
 }
 
@@ -170,14 +170,14 @@ int level_of(int index, int n_levels) {
     return level;
 }
 
-t_d_list * create_filled_list(int n_levels){
+t_d_list * create_filled_list1(int n_levels){
     /* Création d'une liste a partir du principe suivant :
      * Soit n_levels le nombre de niveaux de la liste
      * La liste stocke toutes les valeurs de 0 à 2^n_levels - 1
      * Chaque niveau pointera une cellule sur deux du niveau précédent
      * Le niveau 0 pointera sur toutes les cellules
      * */
-    t_d_list *list = create_list(n_levels);
+    t_d_list *list = create_list1(n_levels);
     int n_cells = pow(2, n_levels) - 1;
     int n_levels_cell = 0;
 
@@ -187,12 +187,12 @@ t_d_list * create_filled_list(int n_levels){
 
         // calcul du nombre de niveaux de la cellule
         n_levels_cell = level_of(i, n_levels) + 1;
-        cells[i-1] = create_cell(i, n_levels_cell);
+        cells[i-1] = create_cell1(i, n_levels_cell);
     }
 
     // Insertion des cellules dans la liste
     for (int i = 0; i < n_cells; i++) {
-        insert_sorted(list, cells[i]);
+        insert_sorted1(list, cells[i]);
     }
 
     // Libération de la mémoire
@@ -201,7 +201,7 @@ t_d_list * create_filled_list(int n_levels){
     return list;
 }
 
-int classic_search(t_d_list *list, int value) {
+int classic_search1(t_d_list *list, int value) {
     int index = 0;
     t_d_cell *cell = list->heads[0];
     while (cell != NULL) {
@@ -214,7 +214,7 @@ int classic_search(t_d_list *list, int value) {
     return -1;
 }
 
-int optimized_search(t_d_list *list, int value) {
+int optimized_search1(t_d_list *list, int value) {
     int index = 0;
     int level = list->max_levels - 1;
     t_d_cell *prev = NULL;

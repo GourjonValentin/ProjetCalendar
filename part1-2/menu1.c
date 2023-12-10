@@ -14,14 +14,14 @@
 #include "testing1.h"
 
 
-void menu() {
+void menu1() {
     printf("Bienvenue sur le calendrier\n");
     int level = 0;
     // Test partie 2
     printf("Quel est le nombre de niveaux de la liste ?\n");
     scanf("%d", &level);
 
-    t_d_list *L = create_filled_list(level);
+    t_d_list *L = create_filled_list1(level);
     int choice = 0;
     do {
         printf("Que voulez-vous faire ?\n");
@@ -35,19 +35,19 @@ void menu() {
         scanf("%d", &choice);
         switch (choice) {
             case 1:
-                print_list(L);
+                print_list1(L);
                 break;
             case 2:
-                print_aligned_list(L);
+                print_aligned_list1(L);
                 break;
             case 3:
                 printf("Quelle valeur voulez-vous chercher ?\n");
                 int value;
                 scanf("%d", &value);
                 printf("Recherche classique : ");
-                printf("position %s\n",classic_search(L, value) == -1 ? "Non trouve" : "trouve");
+                printf("position %s\n", classic_search1(L, value) == -1 ? "Non trouve" : "trouve");
                 printf("Recherche optimisee : ");
-                printf("position %s\n",optimized_search(L, value) == -1 ? "Non trouve" : "trouve");
+                printf("position %s\n", optimized_search1(L, value) == -1 ? "Non trouve" : "trouve");
                 break;
             case 4:
                 test_search_time(level);
@@ -55,7 +55,7 @@ void menu() {
             case 5:
                 printf("Quel est le nouveau niveau de la liste ?\n");
                 scanf("%d", &level);
-                L = create_filled_list(level);
+                L = create_filled_list1(level);
                 break;
             case 6:
 

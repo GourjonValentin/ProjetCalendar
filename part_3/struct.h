@@ -52,4 +52,5 @@ void create_event_for_contact(t_agenda_entry *agenda_entry);
 void del_event_from_contact(t_agenda_entry *agenda_entry, char *name);
 
 
+
 #endif //PROJETCALENDAR_STRUCT_H

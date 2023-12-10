@@ -2,7 +2,7 @@
 // Created by Tristan on 16/11/2023.
 //
 
-#ifndef PROJETCALENDAR_CELL1_H
+#ifndef PROJETCALENDAR_CELL_H
 #define PROJETCALENDAR_CELL_H
 #include "struct.h"
 

@@ -10,7 +10,7 @@
 #include <math.h>
 #include <string.h>
 
-// PARTIE 1
+// PARTIE 3
 
 t_d_list * create_list() {
     int max_levels = 4; // levels = {0, 1, 2, 3}
@@ -23,30 +23,6 @@ t_d_list * create_list() {
     return list;
 }
 
-
-/*
-void insert_head_at_level(t_d_list *list, t_d_cell* cell, int level) {
-    if (level < 0 || level >= list->max_levels) {
-        printf("Error: level %d does not exist\n", level);
-        return;
-    }
-    if (list->heads[level] == NULL) {
-        list->heads[level] = cell;
-        cell->next[level] = NULL;
-        return;
-    }
-    t_d_cell *temp = list->heads[level];
-    list->heads[level] = cell;
-    cell->next[level] = temp;
-}
-
-void insert_head(t_d_list *list, t_d_cell* cell) {
-    for (int i = 0; i < cell->max_levels; i++) {
-        insert_head_at_level(list, cell, i);
-    }
-}
-
-*/
 
 void deleting_node_at_level(t_d_list* list, t_agenda_entry* ag_entry, int level) {
     t_d_cell* temp = list->heads[level];
@@ -71,7 +47,7 @@ void deleting_node(t_d_list* list, t_agenda_entry* ag_entry) {
     }
 }
 
-void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){ // fixme : ici level commence à 0
+void insert_sorted_at_level(t_d_list *list, t_d_cell* cell, int level){
     if (level < 0 || level >= list->max_levels) {
         printf("Error: level %d does not exist\n", level);
         return;
@@ -242,90 +218,65 @@ void print_aligned_level(t_d_list *list, int level) {
 }
 
 
-void print_aligned_list(t_d_list *list) {
+void print_aligned_list1(t_d_list *list) {
     for (int i = 0; i < list->max_levels; i++) {
-        print_aligned_level(list, i);
+        print_aligned_level1(list, i);
     }
-}
-
-
-// PARTIE 2
-
-int level_of(int index, int n_levels) {
-    // Fonction qui calcule le niveau d'une cellule à partir de son index
-    int level = 0;
-    while (index % 2 == 0 && level < n_levels) {
-        index /= 2;
-        level++;
-    }
-    return level;
-}
-
-t_d_list * create_filled_list(int n_levels){
-    /* Création d'une liste a partir du principe suivant :
-     * Soit n_levels le nombre de niveaux de la liste
-     * La liste stocke toutes les valeurs de 0 à 2^n_levels - 1
-     * Chaque niveau pointera une cellule sur deux du niveau précédent
-     * Le niveau 0 pointera sur toutes les cellules
-     * *\/
-    t_d_list *list = create_list(n_levels);
-    int n_cells = pow(2, n_levels) - 1;
-    int n_levels_cell = 0;
-
-    // Création des cellules
-    t_d_cell **cells = malloc(sizeof(t_d_cell *) * n_cells);
-    for (int i = 1; i <= n_cells; i++) {
-
-        // calcul du nombre de niveaux de la cellule
-        n_levels_cell = level_of(i, n_levels) + 1;
-        cells[i-1] = create_cell(i, n_levels_cell);
-    }
-
-    // Insertion des cellules dans la liste
-    for (int i = 0; i < n_cells; i++) {
-        insert_sorted(list, cells[i]);
-    }
-
-    // Libération de la mémoire
-    free(cells);
-
-    return list;
-}
-
-int classic_search(t_d_list *list, int value) {
-    int index = 0;
-    t_d_cell *cell = list->heads[0];
-    while (cell != NULL) {
-        if (cell->value == value) {
-            return index;
-        }
-        index++;
-        cell = cell->next[0];
-    }
-    return -1;
-}
-
-int optimized_search(t_d_list *list, int value) {
-    int index = 0;
-    int level = list->max_levels - 1;
-    t_d_cell *prev = NULL;
-    t_d_cell *cell = list->heads[level];
-    while (level >= 0) {
-        while (cell != NULL && cell->value < value) {
-            index += pow(2, level);
-            prev = cell;
-            cell = cell->next[level];
-        }
-        if (cell != NULL && cell->value == value) {
-            return index;
-        }
-        level--;
-        if (prev != NULL) {
-            cell = prev->next[level];
-        } else {
-            cell = list->heads[level];
-        }
-    }
-    return -1;
 }
 */
+
+
+
+// Recherche avec complétion automatique
+t_agenda_entry* search(t_d_list *agenda) {
+    int i = 1;
+    int lvl_max = agenda->max_levels;
+    t_d_cell *cell = agenda->heads[lvl_max - i];
+    do {
+        if (i == 1) {
+            "Quelle est la première lettre du nom de la personne recherchée ?\n";
+        } else if (i == 2) {
+            "Quelles sont les deux premières lettres du nom de la personne recherchée ?\n";
+        } else if (i == 3) {
+            "Quelles sont les trois premières lettres du nom de la personne recherchée ?\n";
+        } else {
+            "Quel est le nom de la personne recherchée ?\n";
+        }
+
+        int j = 0;
+        while (cell != NULL) {
+            j++;
+            if (j == 0) {
+                printf("Voici les possibilités :\n");
+            }
+            if (i == 1) {
+                printf("%d : %.1s\n", j, cell->ag_entry->contact->last_name);
+            } else if (i == 2) {
+                printf("%d : %.2s\n", j, cell->ag_entry->contact->last_name);
+            } else if (i == 3) {
+                printf("%d : %.3s\n", j, cell->ag_entry->contact->last_name);
+            } else {
+                printf("%d : %s %s\n", j, cell->ag_entry->contact->last_name, cell->ag_entry->contact->first_name);
+            }
+            cell = cell->next[lvl_max - i];
+
+        }
+        int choice = 0;
+        printf("Quel est votre choix ?\n");
+        scanf("%d", &choice);
+        if (choice <= 1 || choice > j) {
+            printf("Erreur : choix invalide\n");
+            return search(agenda);
+        }
+        cell = agenda->heads[lvl_max - i];
+        for (int k = 0; k < choice - 1; k++) {
+            cell = cell->next[lvl_max - i];
+        }
+        if (i == 4) {
+            return cell->ag_entry;
+        }
+        i++;
+
+    } while (i < 5);
+    return NULL; // should never happen
+}

@@ -6,7 +6,7 @@
 
 #include <stdlib.h>
 
-t_d_cell * create_cell(int value, int max_levels){
+t_d_cell * create_cell1(int value, int max_levels){
     t_d_cell *cell = malloc(sizeof(t_d_cell));
     cell->value = value;
     cell->next = malloc(sizeof (t_d_cell) * max_levels);

@@ -11,6 +11,6 @@ typedef struct s_d_cell {
     int max_levels;
 } t_d_cell;
 
-t_d_cell * create_cell(int value, int max_levels);
+t_d_cell * create_cell1(int value, int max_levels);
 
 #endif //PROJETCALENDAR_CELL1_H

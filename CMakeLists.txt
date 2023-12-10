@@ -13,16 +13,19 @@ add_executable(ProjetCalendar
         part1-2/testing1.h
         part1-2/timer1.c
         part1-2/timer1.h
+        part1-2/menu1.c
+        part1-2/menu1.h
         plot/pbPlots.c
         plot/pbPlots.h
         plot/supportLib.c
         plot/supportLib.h
-        #part_3/struct.c
-        #part_3/struct.h
-        #part_3/cell.c part_3/list.c
-        #part_3/insertion_test.c
-        #part_3/insertion_test.h
-        #part_3/menu.c
-        #part_3/menu.h
-        part1-2/menu1.c
-        part1-2/menu1.h)
+        part_3/struct.c
+        part_3/struct.h
+        part_3/cell.c
+        part_3/cell.h
+        part_3/list.c
+        part_3/list.h
+        part_3/insertion_test.c
+        part_3/insertion_test.h
+        part_3/menu.c
+        part_3/menu.h)

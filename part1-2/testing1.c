@@ -51,17 +51,17 @@ time_result** test_search_time_for_given_func(t_d_list *list, int (*search_funct
 void test_search_time(int n_levels) {
     t_d_list *L;
     time_result** classic_results, **optimized_results;
-    L = create_filled_list(n_levels);
-    //print_aligned_list(L);
+    L = create_filled_list1(n_levels);
+    //print_aligned_list1(L);
 
     printf("Comparing search time for classic and optimized search algorithms for a list of size %d\n", n_levels);
     printf("Times are in milliseconds\n");
     printf("\n");
     printf("Classic search: \n");
-    classic_results = test_search_time_for_given_func(L, &classic_search);
+    classic_results = test_search_time_for_given_func(L, &classic_search1);
     printf("\n");
     printf("Optimized search: \n");
-    optimized_results = test_search_time_for_given_func(L, &optimized_search);
+    optimized_results = test_search_time_for_given_func(L, &optimized_search1);
 
     // Ploting data using pbPlots library
 
@@ -144,6 +144,7 @@ void test_search_time(int n_levels) {
 
 }
 
+/* todo : Not finished
 void compareEfficiency(int max_n) {
     printf("Comparing efficiency of classic and optimized search algorithms for a list of size %d\n", max_n);
     printf("Times are in milliseconds\n");
@@ -201,4 +202,4 @@ void compareEfficiency(int max_n) {
     settings->title = L"Evolution of time (ms) to search as a function of the number of searches";
     settings->titleLength = wcslen(settings->title);
     settings
-}
+}*/

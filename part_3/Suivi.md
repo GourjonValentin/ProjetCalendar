@@ -4,7 +4,7 @@
 - [x] Afficher les rendez-vous d’un contact `print_events_for_contact`
 - [x] Créer un contact (avec insertion dans la liste)
   - [x] Créer un contact `create_contact`
-  - [x] Ajouter le contact à la liste des contacts `insert_sorted`
+  - [x] Ajouter le contact à la liste des contacts `insert_sorted1`
 - [ ] Créer un rendez-vous pour un contact (avec insertion dans la liste si le contact n’existe pas) ;
   - [x] Crée un rendez-vous `create_event_for_contact`
   - [ ] Recherche si le contact existe déjà

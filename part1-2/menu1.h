@@ -5,6 +5,6 @@
 #ifndef PROJETCALENDAR_MENU1_H
 #define PROJETCALENDAR_MENU1_H
 
-void menu();
+void menu1();
 
 #endif //PROJETCALENDAR_MENU1_H
